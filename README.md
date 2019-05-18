@@ -86,6 +86,6 @@
         -Regex replace
 
 # CREDITS
-The idea comes from this list [Florin Pop - App ideas](https://github.com/florinpop17/app-ideas).
+The idea comes from this list: [Florin Pop - App ideas](https://github.com/florinpop17/app-ideas).
 
 Thanks for the inspiration!

@@ -14,6 +14,6 @@
     - info collection about loaded/saved data and constrain implementation
     - implement conversion algorithms
   - CSS 
-    - refine layout (mobile-first, ...)
+    - refine layout
     - style page
   - Adjustments
