@@ -1,0 +1,78 @@
+/* BASIC RESET */
+*,*::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* PAGE LAYOUT */
+.panel-container {
+    display: grid;
+    grid-template:  "lpane" auto
+                    "cockpit" 100px
+                    "rpane" auto
+                    / auto;
+    grid-gap: 1rem;
+    padding: 1rem;
+    height: 200vh;
+}
+
+.panel {
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: #ccc;
+    box-shadow: 2px 2px 5px #999 inset, 2px 2px 5px #999;
+    padding: 1rem;
+    font: 400 1rem Helvetica, sans-serif;
+}
+
+.left-panel {
+    grid-area: lpane;
+}
+
+.right-panel {
+    grid-area: rpane;
+}
+
+.cockpit {
+    grid-area: cockpit;
+}
+
+.code-area {
+    resize: none;
+    flex-grow: 1;
+}
+
+@media(min-width: 600px) {
+    .panel-container {
+        display: grid;
+        grid-template:  "lpane rpane" 2fr
+                        "cockpit rpane" 1fr
+                        / 2fr 1fr;
+        height: 100vh;
+    }
+}
+
+/* CUSTOM 'LOAD' BUTTON - supershabam [CODERWALL] */
+.load-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: green;
+    flex-basis: 2rem;
+    text-align: center;
+    padding-top: 0.5rem;
+}
+
+.load-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+}
+
+/* COCKPIT */
+.legend {
+    font: 600 0.6rem monospace;
+    margin: 0 0.5rem ;
+}

@@ -7,6 +7,36 @@
     <title>JSON|CSV converter</title>
 </head>
 <body>
-    <h1>Hello world!</h1>
+    <div class="panel-container">
+        <div class="panel left-panel">
+            <p>
+            Load a .csv file or paste it directly into the area below
+            </p>
+            <div class="load-wrapper" >
+                <span>LOAD CSV</span>
+                <input type="file" class="load-element" id="csv-loader" />
+            </div>
+            <textarea name="csv-area" id="csv-area" cols="1" class="code-area"></textarea>
+        </div>
+        <div class="cockpit">
+            <fieldset>
+                <legend class="legend">CSV OPTIONS</legend>
+                <label for="del">CSV Delimiter</label>
+                <input type="text" name="delimiter" id="del" size="1">
+            </fieldset>
+            
+            <button>CONVERT!</button>
+        </div>
+        <div class="panel right-panel">
+            <p>
+            Load a .json file or paste it directly into the area below
+            </p>   
+            <div class="load-wrapper">
+                <span>LOAD JSON</span>
+                <input type="file" class="load-element" id="json-loader"/>
+            </div>
+            <textarea name="csv-area" id="json-area"  cols="1" class="code-area"></textarea>
+        </div>
+    </div>
 </body>
 </html>
