@@ -7,35 +7,50 @@
     <title>JSON|CSV converter</title>
 </head>
 <body>
-    <div class="panel-container">
-        <div class="panel left-panel">
-            <p>
-            Load a .csv file or paste it directly into the area below
-            </p>
+    <div class="page-wrapper">
+        <div class="header">
+            <h2 class="title">CONVERT FROM JSON TO CSV AND BACK!</h2>
+            <hr/>
+            <button id="toggler" class="btn toggle-btn">
+                CSV to JSON (click to toggle)
+            </button>
+        </div>    
+        <div class="panel left-panel active">
             <div class="load-wrapper" >
                 <span>LOAD CSV</span>
                 <input type="file" class="load-element" id="csv-loader" />
             </div>
-            <textarea name="csv-area" id="csv-area" cols="1" class="code-area"></textarea>
+            <textarea name="csv-area" id="csv-area" cols="1" class="code-area" ></textarea>
+            <input type="text" id="csv-metadata" disabled />
         </div>
         <div class="cockpit">
+            <button id="clear" class="btn clear-btn">CLEAR</button>
             <fieldset>
                 <legend class="legend">CSV OPTIONS</legend>
-                <label for="del">CSV Delimiter</label>
-                <input type="text" name="delimiter" id="del" size="1">
+                <div>
+                    <label for="del">CSV Delimiter</label>
+                    <input type="text" name="delimiter" id="del" size="1">                
+                </div>
+                <div>
+                    <label for="firstline">First line as header</label>
+                    <input type="checkbox" name="firstline" id="firstline">
+                </div>
             </fieldset>
-            
-            <button>CONVERT!</button>
+            <button
+                id="convert-btn"
+                class="btn convert-btn"
+            >
+                CONVERT!
+            </button>
         </div>
         <div class="panel right-panel">
-            <p>
-            Load a .json file or paste it directly into the area below
-            </p>   
             <div class="load-wrapper">
                 <span>LOAD JSON</span>
-                <input type="file" class="load-element" id="json-loader"/>
+                <input type="file" class="load-element" id="json-loader" disabled/>
             </div>
-            <textarea name="csv-area" id="json-area"  cols="1" class="code-area"></textarea>
+            <textarea name="csv-area" id="json-area"  cols="1" class="code-area" disabled></textarea>
+            <input type="text" id="json-metadata" disabled />
+            <button id="indentation">Indent</button>
         </div>
     </div>
 </body>

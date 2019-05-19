@@ -5,52 +5,73 @@
     box-sizing: border-box;
 }
 
+.btn {
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 0.5rem 1rem;
+}
 /* PAGE LAYOUT */
-.panel-container {
+.page-wrapper {
     display: grid;
-    grid-template:  "lpane" auto
+    grid-template:  "header" 150px
+                    "pane" auto
                     "cockpit" 100px
-                    "rpane" auto
                     / auto;
     grid-gap: 1rem;
     padding: 1rem;
-    height: 200vh;
+    min-height: 100vh;
 }
 
 .panel {
     display: flex;
     flex-flow: column nowrap;
-    background-color: #ccc;
+    /* background-color: #ccc; 
     box-shadow: 2px 2px 5px #999 inset, 2px 2px 5px #999;
-    padding: 1rem;
+    padding: 1rem;*/
     font: 400 1rem Helvetica, sans-serif;
+    text-align: center;
+}
+
+.panel:not(.active) {
+    display: none;
 }
 
 .left-panel {
-    grid-area: lpane;
+    grid-area: pane;
 }
 
 .right-panel {
-    grid-area: rpane;
+    grid-area: pane;
 }
 
 .cockpit {
     grid-area: cockpit;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .code-area {
     resize: none;
     flex-grow: 1;
+    box-shadow: 2px 2px 5px #999 inset, 2px 2px 5px #999;
 }
 
-@media(min-width: 600px) {
-    .panel-container {
-        display: grid;
-        grid-template:  "lpane rpane" 2fr
-                        "cockpit rpane" 1fr
-                        / 2fr 1fr;
-        height: 100vh;
-    }
+.header {
+    text-align: center;
+    grid-area: header;
+}
+
+/* HEADER */
+.title {
+    margin-bottom: 1rem;
+}
+
+.toggle-btn {
+    background-color: #bcb;
+    margin: 1rem;
 }
 
 /* CUSTOM 'LOAD' BUTTON - supershabam [CODERWALL] */
@@ -59,7 +80,6 @@
     width: 100%;
     background-color: green;
     flex-basis: 2rem;
-    text-align: center;
     padding-top: 0.5rem;
 }
 
@@ -72,7 +92,55 @@
 }
 
 /* COCKPIT */
-.legend {
+fieldset {
+    padding: 0.2rem 0.5rem;
     font: 600 0.6rem monospace;
-    margin: 0 0.5rem ;
+}
+
+fieldset > div {
+    display: inline-block;
+}
+
+.legend {
+    margin: 0 0.5rem;
+}
+
+.clear-btn {
+    background-color: #aaa;
+}
+
+.convert-btn {
+    border-radius: 10px;    
+    background-color: #4468cc;
+    color: #fef;
+    font: 500 1.4rem Arial;
+}
+
+/* MEDIA QUERIES */
+@media(min-width: 640px){
+    .cockpit {
+        flex-flow: row nowrap;
+    }
+}
+
+@media(min-width: 1024px) {
+    .page-wrapper {
+        display: grid;
+        grid-template:  "header header" 150px
+                        "lpane rpane" 2fr
+                        "cockpit rpane" 1fr
+                        / 2fr 1fr;
+    }
+
+    .left-panel {
+        grid-area: lpane;
+    }
+
+    .right-panel {
+        grid-area: rpane;
+    }
+ 
+    .panel:not(.active) {
+        display: flex;
+    }
 }
