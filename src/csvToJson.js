@@ -1,6 +1,5 @@
-export default function main(){
-    let delimiter = ',';
-    let firstlineHeader = false;
+export default function main(data, delimiter=',', firstlineHeader=false)
+{
 
     let rows = data.split('\n');
     let keys, values;
@@ -35,6 +34,8 @@ export default function main(){
         };
         resultJson.push(tmp);
     };
+
+    return resultJson;
 }
 
 // Check if all rows have the same amount of fields

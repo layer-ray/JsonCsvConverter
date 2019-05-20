@@ -1,6 +1,5 @@
 'use strict'
-export default function main(){
-    const delimiter = ',';
+export default function main(data, delimiter=','){
     let providedJson = JSON.parse(data);
     // Code works with array methods so it convert the provided json if it is not
     let jsonArray = Array.isArray(providedJson) ? providedJson : [providedJson];
@@ -25,7 +24,7 @@ export default function main(){
 
     for(let record of jsonArray) {
         let entries = Object.entries(record);
-        let orderedEntries = [];
+        let orderedEntries = [header];
         
         // for each record sort the values to match the header
         for (let key of headerKeys){
@@ -33,6 +32,8 @@ export default function main(){
         }
         Object.values(orderedEntries).join(delimiter)
     }
+
+    return orderedEntries;
 }
 
 function normalizeJSONKeys(jsonArr){
