@@ -1,8 +1,20 @@
+/* VARIABLES */
+:root {
+  --code-background: #212321;
+  --dark-font: #111;
+  --light-font: #fef;
+  --info-color: #242688;
+  --success-color: #146816;
+  --grey-color: #888;
+}
+
 /* BASIC RESET */
 *,*::before, *::after {
     margin: 0;
     padding: 0;
+    border: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
 .btn {
@@ -10,137 +22,133 @@
     border: 0;
     margin: 0;
     padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-align: center;
 }
+
+.btn:disabled {
+  background-color: var(--grey-color);
+  color: var(--dark-font);
+}
+
+hr {
+  display: block;
+  margin: 0.5em auto;
+  border: 1px inset #000;
+}
+
+
+
 /* PAGE LAYOUT */
-.page-wrapper {
+.main-container {
     display: grid;
-    grid-template:  "header" 150px
-                    "pane" auto
-                    "cockpit" 100px
-                    / auto;
-    grid-gap: 1rem;
-    padding: 1rem;
+    grid-template-columns: 90vw 90vw;
+    grid-template-rows: min-content 1fr min-content;
+    grid-column-gap: 5vw;
+    margin-left: 5vw;
     min-height: 100vh;
+    overflow: hidden;
+}
+
+header {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  text-align: center;
 }
 
 .panel {
-    display: flex;
-    flex-flow: column nowrap;
-    /* background-color: #ccc; 
-    box-shadow: 2px 2px 5px #999 inset, 2px 2px 5px #999;
-    padding: 1rem;*/
-    font: 400 1rem Helvetica, sans-serif;
-    text-align: center;
+  display: flex;
+  flex-flow: column nowrap;
+
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 1;
+}
+.panel.inverse {
+  flex-flow: column-reverse nowrap;
+  grid-column-start: 2;
+}
+.panel.inverse.active {
+  grid-column-start: 1;
+}
+.commands {
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 1;
 }
 
-.panel:not(.active) {
-    display: none;
+/* PANEL ELEMENTS */
+.split-area, .area-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  flex-grow: 1;
 }
 
-.left-panel {
-    grid-area: pane;
-}
-
-.right-panel {
-    grid-area: pane;
-}
-
-.cockpit {
-    grid-area: cockpit;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: space-around;
+.split-area.h {
+  flex-flow: row nowrap;
 }
 
 .code-area {
-    resize: none;
-    flex-grow: 1;
-    box-shadow: 2px 2px 5px #999 inset, 2px 2px 5px #999;
+  resize: none;
+  flex-grow: 1;
+  background-color: var(--code-background);
+  color: #efe;
 }
 
-.header {
-    text-align: center;
-    grid-area: header;
+.h .code-area:nth-child(2) {
+  border-left: 1px solid white;
 }
 
-/* HEADER */
-.title {
-    margin-bottom: 1rem;
-}
-
-.toggle-btn {
-    background-color: #bcb;
-    margin: 1rem;
-}
-
-/* CUSTOM 'LOAD' BUTTON - supershabam [CODERWALL] */
-.load-wrapper {
-    position: relative;
-    width: 100%;
-    background-color: green;
-    flex-basis: 2rem;
-    padding-top: 0.5rem;
-}
-
-.load-element {
+/* custom load button - supershabam [CODERWALL] */
+.load-input {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     opacity: 0;
+    cursor: pointer;
 }
 
-/* COCKPIT */
-fieldset {
-    padding: 0.2rem 0.5rem;
-    font: 600 0.6rem monospace;
+.load-btn, .save-btn {
+    padding-top: 0.5rem;
+    color: var(--light-font);
 }
 
-fieldset > div {
-    display: inline-block;
+.load-btn {
+    background-color: var(--info-color);
+
+    position: relative;
+    width: 100%;
+    flex-basis: 2rem;
+} 
+.save-btn {
+    background-color: var(--success-color)
 }
 
-.legend {
-    margin: 0 0.5rem;
+/* PANEL ELEMENTS LOGIC 
+When inverse is not applied:
+ - load and beautify buttons are visible
+ - save is not
+When inverse is applied:
+- load and beautify buttons are hidden
+- save button is visible
+*/
+.load-btn, .beauty-btn {
+    display: block;
 }
 
-.clear-btn {
-    background-color: #aaa;
+.save-btn {
+  display: none;
 }
 
-.convert-btn {
-    border-radius: 10px;    
-    background-color: #4468cc;
-    color: #fef;
-    font: 500 1.4rem Arial;
+.inverse > .load-btn,
+.inverse > .beauty-btn {
+  display: none;
 }
 
-/* MEDIA QUERIES */
-@media(min-width: 640px){
-    .cockpit {
-        flex-flow: row nowrap;
-    }
+.inverse > .save-btn {
+  display: block;
 }
 
-@media(min-width: 1024px) {
-    .page-wrapper {
-        display: grid;
-        grid-template:  "header header" 150px
-                        "lpane rpane" 2fr
-                        "cockpit rpane" 1fr
-                        / 2fr 1fr;
-    }
-
-    .left-panel {
-        grid-area: lpane;
-    }
-
-    .right-panel {
-        grid-area: rpane;
-    }
- 
-    .panel:not(.active) {
-        display: flex;
-    }
+/* GENERAL */
+.hidden {
+  display: none;
 }

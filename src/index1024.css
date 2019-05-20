@@ -1,0 +1,165 @@
+/* VARIABLES 
+:root {
+  --code-background: #212321;
+  --dark-font: #111;
+  --light-font: #fef;
+  --info-color: #242688;
+  --success-color: #146816;
+  --grey-color: #888;
+}
+*/
+/* BASIC RESET 
+*,*::before, *::after {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.btn {
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:disabled {
+  background-color: var(--grey-color);
+  color: var(--dark-font);
+}
+
+hr {
+  display: block;
+  margin: 0.5em auto;
+  border: 1px inset #000;
+}
+*/
+/* GENERAL 
+.hidden {
+  display: none;
+}
+*/
+/* PAGE LAYOUT */
+
+@media(min-width: 1024px) {
+  .main-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: min-content repeat(2, 1fr);
+      grid-gap: 1rem;
+      padding: 1rem;
+      min-height: 100vh;
+  }
+
+  header {
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+    text-align: center;
+  }
+
+  /* PANEL SWAP LOGIC
+  When inverse is applied:
+  - change position
+  - mantain shape
+  - reverse element flow
+  */
+
+  .panel {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  .panel.inverse {
+    flex-flow: column-reverse nowrap;
+  }
+
+  .panel:nth-child(2) {
+    grid-row: 2 / span 2;
+    grid-column: 1 / span 1;
+  }
+
+  .panel:nth-child(2).inverse {
+    grid-column-start: 3;
+  }
+
+  .panel:nth-child(3) {
+    grid-row: 2 / span 1;
+    grid-column: 1 / span 2;
+  }
+
+  .panel:nth-child(3).inverse {
+    grid-column-start: 2;
+  }
+
+  .commands {
+    grid-row: 3 / span 1;
+    grid-column: 2 / span 1;
+  }
+  /* PANEL ELEMENTS */
+  .split-area {
+    display: flex;
+    flex-flow: column nowrap;
+    flex-grow: 1;
+  }
+
+  .code-area {
+    resize: none;
+    flex-grow: 1;
+    background-color: var(--code-background);
+    color: #efe;
+  }
+
+  /* custom load button - supershabam [CODERWALL] */
+  .load-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
+  }
+
+  .load-btn, .save-btn {
+      padding-top: 0.5rem;
+      color: var(--light-font);
+  }
+
+  .load-btn {
+      background-color: var(--info-color);
+
+      position: relative;
+      width: 100%;
+      flex-basis: 2rem;
+  } 
+  .save-btn {
+      background-color: var(--success-color)
+  }
+
+  /* PANEL ELEMENTS LOGIC 
+  When inverse is not applied:
+  - load and beautify buttons are visible
+  - save is not
+  When inverse is applied:
+  - load and beautify buttons are hidden
+  - save button is visible
+  */
+  .load-btn, .beauty-btn {
+      display: block;
+  }
+
+  .save-btn {
+    display: none;
+  }
+
+  .inverse > .load-btn,
+  .inverse > .beauty-btn {
+    display: none;
+  }
+
+  .inverse > .save-btn {
+    display: block;
+  }
+}
