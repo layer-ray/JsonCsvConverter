@@ -15,35 +15,38 @@ const splitVBtn = document.querySelector('#split-v');
 
 const pageContainer = document.querySelector('#main-container');
 
-const saveCsvEditorBtn = document.querySelector('#panel-one #save-btn');
-const saveJsonEditorBtn = document.querySelector('#panel-two #save-btn');
+const saveCsvEditorBtn = document.querySelector('#panel-one #save-btn-one');
+const saveJsonEditorBtn = document.querySelector('#panel-two #save-btn-two');
 
-const loadCsvBtn = document.querySelector('#panel-one #load-btn');
-const loadJsonBtn = document.querySelector('#panel-two #load-btn');
+const loadCsvBtn = document.querySelector('#panel-one #load-btn-one');
+const loadJsonBtn = document.querySelector('#panel-two #load-btn-two');
 
-const beautifyCsvBtn = document.querySelector('#panel-one #beautify');
-const beautifyJsonBtn = document.querySelector('#panel-two #beautify');
+const loaderCsvInput = document.querySelector('#panel-one #loader-one');
+const loaderJsonInput = document.querySelector('#panel-two #loader-two');
 
-const csvEditorArea = document.querySelector('#panel-one #upper-area');
-const jsonEditorArea = document.querySelector('#panel-two #upper-area');
+const beautifyCsvBtn = document.querySelector('#panel-one #beautify-one');
+const beautifyJsonBtn = document.querySelector('#panel-two #beautify-two');
 
-const closeCsvEditorBtn = document.querySelector('#panel-one #close-upper-area');
-const closeJsonEditorBtn = document.querySelector('#panel-two #close-upper-area');
+const csvEditorArea = document.querySelector('#panel-one #upper-area-one');
+const jsonEditorArea = document.querySelector('#panel-two #upper-area-two');
 
-const csvEditorSplitArea = document.querySelector('#panel-one .split-area');
-const jsonEditorSplitArea = document.querySelector('#panel-two .split-area');
+const closeCsvEditorBtn = document.querySelector('#panel-one #close-upper-area-one');
+const closeJsonEditorBtn = document.querySelector('#panel-two #close-upper-area-two');
 
-const csvEditorLowerArea = document.querySelector('#panel-one  #lower-area');
-const jsonEditorLowerArea = document.querySelector('#panel-two #lower-area');
+const csvEditorSplitArea = document.querySelector('#panel-one #split-area-one');
+const jsonEditorSplitArea = document.querySelector('#panel-two #split-area-two');
 
-const csvEditorLowerWrapperArea = document.querySelector('#panel-one #lower-area-wrapper');
-const jsonEditorLowerWrapperArea = document.querySelector('#panel-two #lower-area-wrapper');
+const csvEditorLowerArea = document.querySelector('#panel-one  #lower-area-one');
+const jsonEditorLowerArea = document.querySelector('#panel-two #lower-area-two');
 
-const closeCsvEditorLowerArea = document.querySelector('#panel-one #close-lower-area');
-const closeJsonEditorLowerArea = document.querySelector('#panel-two #close-lower-area');
+const csvEditorLowerWrapperArea = document.querySelector('#panel-one #lower-area-wrapper-one');
+const jsonEditorLowerWrapperArea = document.querySelector('#panel-two #lower-area-wrapper-two');
 
-const csvMetadataInput = document.querySelector('#panel-one #metadata');
-const jsonMetadataInput = document.querySelector('#panel-two #metadata');
+const closeCsvEditorLowerArea = document.querySelector('#panel-one #close-lower-area-one');
+const closeJsonEditorLowerArea = document.querySelector('#panel-two #close-lower-area-two');
+
+const csvMetadataInput = document.querySelector('#panel-one #metadata-one');
+const jsonMetadataInput = document.querySelector('#panel-two #metadata-two');
 
 const convertBtn = document.querySelector('#convert-btn');
 
@@ -60,6 +63,7 @@ function reverse(){
     jsonPanel.classList.toggle('inverse');
     csvEditorArea.value = "";
     jsonEditorArea.value = "";
+    toggler.innerHTML = csvToJson ? "csv to json &rlarr;" : "json to csv &rlarr;"
 };
 
 function convert(){
@@ -78,11 +82,12 @@ function convert(){
  
         displayOptions.classList.toggle('hidden');
         convertBtn.classList.toggle('hidden');
-        toggler.disabled = !toggler.disabled;
+        toggler.classList.toggle('hidden');
+        
     }
 
 
-    if(conversionState === 1) {
+    if(conversionState) {
         csvToJson
             ?   resetJsonPanel()
             :   resetCsvPanel();
@@ -96,11 +101,27 @@ function swapResultOriginal(){
     if(csvToJson) {
         csvPanel.classList.toggle('inverse');
         jsonPanel.classList.toggle('active');
+        loadCsvBtn.classList.toggle('disabled');
+        beautifyCsvBtn.classList.toggle('hidden');
         removeJsonPanelSplit();
     } else {
         jsonPanel.classList.toggle('inverse');
         csvPanel.classList.toggle('active');
+        loadJsonBtn.classList.toggle('disabled');
+        beautifyJsonBtn.classList.toggle('hidden');
         removeCsvPanelSplit();
+    }
+    
+    if(conversionState) {
+        swapAreasBtn.innerHTML = "&rarrhk; see result";
+        splitHBtn.disabled = true;
+        splitVBtn.disabled = true;
+        conversionState = 0;
+    } else {
+        swapAreasBtn.innerHTML = "&larrhk; see original";
+        splitHBtn.disabled = false;
+        splitVBtn.disabled = false;
+        conversionState = 1;
     }
 };
 

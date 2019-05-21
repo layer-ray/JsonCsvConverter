@@ -9,28 +9,29 @@
 <body>
     <div class="main-container" id="main-container">
         <header>
-            <h2> Test </h2>
-            <button id="toggler">Toggle</button>
-            <hr/>
+            <h2> JSON | CSV CONVERTER </h2>
+            <button id="toggler" class="btn toggler-btn">csv to json 
+            <span>&rlarr;</span></button>
+            <!-- <hr/> -->
             <div class="header-options hidden" id="header-options">
                 <button 
-                    class="toggle-areas"
+                    class="btn btn-toggle-areas"
                     id="swap-areas"
                 >
-                    RESULT | ORIGINAL
+                    <span>&larrhk;</span>  see original
                 </button>
                 <div class="splitters">
                      <button 
-                        class="split-h"
+                        class="btn btn-split-h"
                         id="split-h"
                     >
-                        SPLIT HORIZONTALLY
+                        <span>&#8614;</span> split h
                     </button>
                     <button 
-                        class="split-v"
+                        class="btn btn-split-v"
                         id="split-v"
                     >
-                        SPLIT VERTICALLY
+                        <span>&mapstodown;</span> split v
                     </button>
                 </div>
             </div>
@@ -41,55 +42,56 @@
         <div class="panel" id="panel-one">
             <div 
                 class="btn load-btn"
-                id="load-btn"
+                id="load-btn-one"
             >
-                LOAD ONE
+                LOAD CSV
                 <input 
                     size="1"
                     type="file" 
                     name="loader"
-                    id="loader" 
+                    id="loader-one" 
                     class="load-input"
                 >
             </div>
             <button 
                 class="btn save-btn hidden"
-                id="save-btn"
+                id="save-btn-one"
                 disabled="true"
             >
-                SAVE ONE
+                SAVE CSV
             </button>
-            <div class="split-area" id="split-area">
+            <div class="split-area" id="split-area-one">
                 <div 
                     class="area-wrapper" 
-                    id="upper-area-wrapper"
+                    id="upper-area-wrapper-one"
                 >
                     <button 
                         class="close-area hidden"
-                        id="close-upper-area"
+                        id="close-upper-area-one"
                     >
-                      close general  &times;
+                        close result screen and go back to home 
+                        <span font-size="7">&times;</span>
                     </button>
                     <textarea 
                         name="upper-area" 
-                        id="upper-area"
+                        id="upper-area-one"
                         cols="1"
                         class="code-area"
                     ></textarea>
                 </div>
                 <div
                     class="area-wrapper hidden" 
-                    id="lower-area-wrapper"
+                    id="lower-area-wrapper-one"
                 >
                     <button 
                         class="close-area"
-                        id="close-lower-area"
+                        id="close-lower-area-one"
                     >
-                        close subarea &times;
+                        close original file <span>&times;</span>
                     </button>
                     <textarea 
                         name="lower-area" 
-                        id="lower-area"
+                        id="lower-area-one"
                         cols="1"
                         class="code-area"
                     ></textarea>
@@ -97,14 +99,14 @@
             </div>
             <button 
                 class="btn beauty-btn"
-                id="beautify"
+                id="beautify-one"
             >
                 beautify
             </button>
             <input 
                 type="text" 
                 name="metadata" 
-                id="metadata" 
+                id="metadata-one" 
                 class="metadata"
                 size="1"
                 disabled="true"
@@ -117,55 +119,56 @@
         <div class="panel inverse" id="panel-two">
             <div 
                 class="btn load-btn"
-                id="load-btn"
+                id="load-btn-two"
             >
-                LOAD TWO
+                LOAD JSON
                 <input 
                     size="1"
                     type="file" 
                     name="loader"
-                    id="loader" 
+                    id="loader-two" 
                     class="load-input"
                 >
             </div>
             <button 
                 class="btn save-btn hidden"
-                id="save-btn"
+                id="save-btn-two"
                 disabled="true"
             >
-                SAVE TWO
+                SAVE JSON
             </button>
-            <div class="split-area" id="split-area">
+            <div class="split-area" id="split-area-two">
                 <div 
                     class="area-wrapper" 
-                    id="upper-area-wrapper"
+                    id="upper-area-wrapper-two"
                 >
                     <button 
                         class="close-area hidden"
-                        id="close-upper-area"
+                        id="close-upper-area-two"
                     >
-                        close general &times;
+                        close result screen and go back to home 
+                       <span>&times;</span>
                     </button>
                     <textarea 
                         name="upper-area" 
-                        id="upper-area"
+                        id="upper-area-two"
                         cols="1"
                         class="code-area"
                     ></textarea>
                 </div>
                 <div
                     class="area-wrapper hidden" 
-                    id="lower-area-wrapper"
+                    id="lower-area-wrapper-two"
                 >
                     <button 
                         class="close-area"
-                        id="close-lower-area"
+                        id="close-lower-area-two"
                     >
-                        close subarea &times;
+                        close original file <span>&times;</span>
                     </button>
                     <textarea 
                         name="lower-area" 
-                        id="lower-area"
+                        id="lower-area-two"
                         cols="1"
                         class="code-area"
                     ></textarea>
@@ -173,14 +176,14 @@
             </div>
             <button 
                 class="btn beauty-btn"
-                id="beautify"
+                id="beautify-two"
             >
                 beautify
             </button>
             <input 
                 type="text" 
                 name="metadata" 
-                id="metadata" 
+                id="metadata-two" 
                 class="metadata"
                 size="1"
                 disabled="true"

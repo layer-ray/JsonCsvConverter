@@ -1,11 +1,16 @@
 /* VARIABLES */
 :root {
   --code-background: #212321;
-  --dark-font: #111;
-  --light-font: #fef;
+  
   --info-color: #242688;
   --success-color: #146816;
+  --danger-color: #aa2250;
   --grey-color: #888;
+
+
+  --dark-font: #111;
+  --light-font: #fef;
+  --grey-font: #555;
 }
 
 /* BASIC RESET */
@@ -16,19 +21,20 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
-
+/* GENERAL BUTTON PROPS */
 .btn {
     background: none;
-    border: 0;
     margin: 0;
     padding: 0.5rem 1rem;
     cursor: pointer;
     text-align: center;
+    width: 100%;
 }
 
 .btn:disabled {
   background-color: var(--grey-color);
-  color: var(--dark-font);
+  color: var(--grey-font);
+  cursor: not-allowed;
 }
 
 hr {
@@ -37,7 +43,9 @@ hr {
   border: 1px inset #000;
 }
 
-
+h2 {
+  margin-bottom: 0.5rem;
+}
 
 /* PAGE LAYOUT */
 .main-container {
@@ -46,6 +54,7 @@ hr {
     grid-template-rows: min-content 1fr min-content;
     grid-column-gap: 5vw;
     margin-left: 5vw;
+    padding: 2rem 0;
     min-height: 100vh;
     overflow: hidden;
 }
@@ -75,7 +84,36 @@ header {
   grid-column: 1 / span 1;
 }
 
+/* header */
+.toggler-btn {
+  border: 1px solid var(--dark-font);
+  color: var(--dark-font);
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  border-radius: 15px;
+}
+
+/* header options */
+.header-options {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 1rem;
+}
+
+.header-options button{
+  border: 3px double  var(--dark-font);
+  padding: 0.5rem 0.2rem;
+  color: var(--dark-font);
+  font: 500 italic 1rem Verdana, Arial, sans-serif;
+}
+
+.splitters {
+  flex-basis: 50%;
+  flex-grow: 1;
+  min-width: max-content;
+}
 /* PANEL ELEMENTS */
+
+/* code area(s) */
 .split-area, .area-wrapper {
   display: flex;
   flex-flow: column nowrap;
@@ -93,8 +131,34 @@ header {
   color: #efe;
 }
 
+.close-area {  
+  display: flex;
+  justify-content: center;
+
+  border: 1px solid var(--light-font);
+  padding: 0.5rem;
+
+  background-color: var(--danger-color);
+  color: var(--light-font);
+  cursor: pointer;
+}
+/* html entities  */
+.close-area span,
+.toggler-btn span,
+.header-options button span{
+  font-size: 1.1rem;
+  margin: 0 0.2rem;
+}
+
+/* additional code-area props */
 .h .code-area:nth-child(2) {
   border-left: 1px solid white;
+}
+
+.area-wrapper:nth-child(2) .close-area {  
+  background-color: var(--code-background);
+  color: var(--light-font);
+  border: 1px solid var(--light-font);
 }
 
 /* custom load button - supershabam [CODERWALL] */
@@ -107,20 +171,42 @@ header {
     cursor: pointer;
 }
 
-.load-btn, .save-btn {
+
+.load-btn {
+  background-color: var(--success-color);
+
+  position: relative;
+  width: 100%;
+  flex-basis: 2rem;
+} 
+
+.load-btn.disabled {
+  background-color: var(--grey-color);
+  color: var(--grey-font);
+  cursor: not-allowed;
+}
+
+.disabled .load-input {
+  pointer-events: none;
+}
+
+.load-btn, .save-btn, .convert-btn {
     padding-top: 0.5rem;
     color: var(--light-font);
 }
 
-.load-btn {
-    background-color: var(--info-color);
-
-    position: relative;
-    width: 100%;
-    flex-basis: 2rem;
-} 
 .save-btn {
     background-color: var(--success-color)
+}
+
+.beauty-btn {
+  margin-top: 1rem;
+  border: 1px solid var(--info-color);
+  color: var(--info-color);
+}
+
+.convert-btn {
+  background-color: var(--info-color);
 }
 
 /* PANEL ELEMENTS LOGIC 
