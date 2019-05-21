@@ -107,7 +107,7 @@ header {
 }
 
 .splitters {
-  flex-basis: 50%;
+  flex-basis: 100%;
   flex-grow: 1;
   min-width: max-content;
 }
