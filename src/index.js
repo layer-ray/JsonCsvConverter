@@ -3,56 +3,24 @@ import convertCsvToJson from './csvToJson';
 
 import './index.css';
 import './index1024.css';
-
-const csvPanel = document.querySelector('#panel-one');
-const jsonPanel = document.querySelector('#panel-two');
-const togglerBtn = document.querySelector('#toggler');
-
-const displayOptions = document.querySelector('#header-options');
-const swapAreasBtn = document.querySelector('#swap-areas');
-const splitHBtn = document.querySelector('#split-h');
-const splitVBtn = document.querySelector('#split-v');
-
-const pageContainer = document.querySelector('#main-container');
-
-const saveCsvEditorBtn = document.querySelector('#panel-one #save-btn-one');
-const saveJsonEditorBtn = document.querySelector('#panel-two #save-btn-two');
-
-const loadCsvBtn = document.querySelector('#panel-one #load-btn-one');
-const loadJsonBtn = document.querySelector('#panel-two #load-btn-two');
-
-const loaderCsvInput = document.querySelector('#panel-one #loader-one');
-const loaderJsonInput = document.querySelector('#panel-two #loader-two');
-
-const beautifyCsvBtn = document.querySelector('#panel-one #beautify-one');
-const beautifyJsonBtn = document.querySelector('#panel-two #beautify-two');
-
-const csvEditorArea = document.querySelector('#panel-one #upper-area-one');
-const jsonEditorArea = document.querySelector('#panel-two #upper-area-two');
-
-const closeCsvEditorBtn = document.querySelector('#panel-one #close-upper-area-one');
-const closeJsonEditorBtn = document.querySelector('#panel-two #close-upper-area-two');
-
-const csvEditorSplitArea = document.querySelector('#panel-one #split-area-one');
-const jsonEditorSplitArea = document.querySelector('#panel-two #split-area-two');
-
-const csvEditorLowerArea = document.querySelector('#panel-one  #lower-area-one');
-const jsonEditorLowerArea = document.querySelector('#panel-two #lower-area-two');
-
-const csvEditorLowerWrapperArea = document.querySelector('#panel-one #lower-area-wrapper-one');
-const jsonEditorLowerWrapperArea = document.querySelector('#panel-two #lower-area-wrapper-two');
-
-const closeCsvEditorLowerArea = document.querySelector('#panel-one #close-lower-area-one');
-const closeJsonEditorLowerArea = document.querySelector('#panel-two #close-lower-area-two');
-
-const csvMetadataInput = document.querySelector('#panel-one #metadata-one');
-const jsonMetadataInput = document.querySelector('#panel-two #metadata-two');
-
-const convertBtn = document.querySelector('#convert-btn');
-
+import {
+    pageContainer, togglerBtn, displayOptions, 
+    swapAreasBtn, splitHBtn, splitVBtn, convertBtn, 
+    csvPanel, jsonPanel, saveCsvEditorBtn, 
+    saveJsonEditorBtn, loadCsvBtn, loadJsonBtn, 
+    loaderCsvInput, loaderJsonInput, beautifyCsvBtn, 
+    beautifyJsonBtn, csvEditorArea, jsonEditorArea, 
+    closeCsvEditorBtn, closeJsonEditorBtn, 
+    csvEditorSplitArea, jsonEditorSplitArea, 
+    csvEditorLowerArea, jsonEditorLowerArea, 
+    csvEditorLowerWrapperArea, jsonEditorLowerWrapperArea, 
+    closeCsvEditorLowerArea, closeJsonEditorLowerArea, 
+    csvMetadataInput, jsonMetadataInput
+} from './domSelections';
 
 let csvToJson = true; 
 let conversionState = 0;
+
 /* 
 class inverse change flex flow AND column position
 class active change ONLY column position
@@ -169,7 +137,6 @@ function checkIfEmpty(e){
     } else {
         saveCsvEditorBtn.disabled = e.target.value === "";
     }
-
 };
 
 function resetJsonPanel(){
@@ -191,7 +158,6 @@ function removeCsvPanelSplit(){
     csvEditorSplitArea.classList.remove('h');
     csvEditorLowerWrapperArea.classList.add('hidden');
 }
-
 
 function checkVal(){
     console.log(isAreaEmpty);
