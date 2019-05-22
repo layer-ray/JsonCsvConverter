@@ -129,6 +129,8 @@ header {
   flex-grow: 1;
   background-color: var(--code-background);
   color: #efe;
+  padding: 1rem;
+  font-family: monospace;
 }
 
 .close-area {  

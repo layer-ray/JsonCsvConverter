@@ -22,18 +22,20 @@ export default function main(data, delimiter=','){
     let headerKeys = Object.keys(jsonArray[0]);
     let header = headerKeys.join(delimiter);
 
+    let finalCsv = [header];
     for(let record of jsonArray) {
         let entries = Object.entries(record);
-        let orderedEntries = [header];
+        let orderedEntries = [];
         
         // for each record sort the values to match the header
         for (let key of headerKeys){
             orderedEntries.push(entries.find(entry => key === entry[0])[1])
         }
-        Object.values(orderedEntries).join(delimiter)
+        let newRow = Object.values(orderedEntries).join(delimiter);
+        finalCsv.push(newRow);
     }
 
-    return orderedEntries;
+    return finalCsv.join('\n');
 }
 
 function normalizeJSONKeys(jsonArr){

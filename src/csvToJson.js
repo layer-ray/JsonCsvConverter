@@ -20,7 +20,6 @@ export default function main(data, delimiter=',', firstlineHeader=false)
         return;
     }
 
-
     // build json from csv cleaned data
     let resultJson = [];
     for (const fields of values) {
@@ -28,7 +27,7 @@ export default function main(data, delimiter=',', firstlineHeader=false)
         for(let i=0; i<fields.length; i++){
             // remove unnecessary double quotes 
             let currentKey = keys[i].replace(/"/g, "");
-            let currentValue = fields[i].replace(/"/g, "");
+            let currentValue = fields[i].replace(/"/g, "").trim();
 
             tmp[currentKey] = currentValue;
         };
@@ -69,7 +68,7 @@ function validateCSV(csvArray, del) {
 };
 
 // function used to check if a field has like breaks inside it
-function checkEmbeddedLineTerminators(rows) {
+export function checkEmbeddedLineTerminators(rows) {
 
     let rowArr = rows.slice();
     let totalQuotes = 0;

@@ -17,6 +17,7 @@ import {
     closeCsvEditorLowerArea, closeJsonEditorLowerArea, 
     csvMetadataInput, jsonMetadataInput
 } from './domSelections';
+import { handleFileLoad } from './manageFiles';
 
 let csvToJson = true; 
 let conversionState = 0;
@@ -41,21 +42,32 @@ function convert(){
             jsonPanel.classList.toggle('active');
             closeJsonEditorBtn.classList.toggle('hidden');
             saveJsonEditorBtn.disabled = jsonEditorArea.value === "";
+
+            let parsed = convertCsvToJson(csvEditorArea.value, ',', false);
+            jsonEditorArea.value = JSON.stringify(parsed, undefined, 2);
+            jsonEditorLowerArea.value = csvEditorArea.value;
         } else {
             jsonPanel.classList.toggle('inverse');
             csvPanel.classList.toggle('active');
             closeCsvEditorBtn.classList.toggle('hidden');
             saveCsvEditorBtn.disabled = csvEditorArea.value === "";
+
+            csvEditorArea.value  = convertJsonToCsv(jsonEditorArea.value, ',');
+            csvEditorLowerArea.value = jsonEditorArea.value;
         }
  
         displayOptions.classList.toggle('hidden');
         convertBtn.classList.toggle('hidden');
         toggler.classList.toggle('hidden');
-        
     }
 
 
     if(conversionState) {
+        csvEditorArea.value = "";
+        jsonEditorArea.value = "";
+        csvMetadataInput.value = "";
+        jsonMetadataInput.value = "";
+
         csvToJson
             ?   resetJsonPanel()
             :   resetCsvPanel();
@@ -159,15 +171,8 @@ function removeCsvPanelSplit(){
     csvEditorLowerWrapperArea.classList.add('hidden');
 }
 
-function checkVal(){
-    console.log(isAreaEmpty);
-};
-
 jsonEditorArea.addEventListener('input', checkIfEmpty);
 csvEditorArea.addEventListener('input', checkIfEmpty);
-
-beautifyJsonBtn.addEventListener('click', checkVal)
-beautifyCsvBtn.addEventListener('click', checkVal);
 
 togglerBtn.addEventListener('click', reverse);
 convertBtn.addEventListener('click', convert);
