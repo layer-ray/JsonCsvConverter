@@ -12,7 +12,6 @@
             <h2> JSON | CSV CONVERTER </h2>
             <button id="toggler" class="btn toggler-btn">csv to json 
             <span>&rlarr;</span></button>
-            <!-- <hr/> -->
             <div class="header-options hidden" id="header-options">
                 <button 
                     class="btn btn-toggle-areas"
@@ -39,59 +38,59 @@
 
         <!-- FIRST PANEL (USED FOR CSV) -->
 
-        <div class="panel" id="panel-one">
+        <div class="panel" id="panel">
             <div 
                 class="btn load-btn"
-                id="load-btn-one"
+                id="load-btn"
             >
-                LOAD CSV
+                <span>LOAD CSV</span>
                 <input 
                     size="1"
                     type="file" 
                     name="loader"
-                    id="loader-one" 
+                    id="loader" 
                     class="load-input"
                 >
             </div>
             <button 
                 class="btn save-btn hidden"
-                id="save-btn-one"
+                id="save-btn"
                 disabled="true"
             >
-                SAVE CSV
+                SAVE JSON
             </button>
-            <div class="split-area" id="split-area-one">
+            <div class="split-area" id="split-area">
                 <div 
                     class="area-wrapper" 
-                    id="upper-area-wrapper-one"
+                    id="upper-area-wrapper"
                 >
                     <button 
                         class="close-area hidden"
-                        id="close-upper-area-one"
+                        id="close-upper-area"
                     >
                         close result screen and go back to home 
                         <span font-size="7">&times;</span>
                     </button>
                     <textarea 
                         name="upper-area" 
-                        id="upper-area-one"
+                        id="upper-area"
                         cols="1"
                         class="code-area"
                     ></textarea>
                 </div>
                 <div
                     class="area-wrapper hidden" 
-                    id="lower-area-wrapper-one"
+                    id="lower-area-wrapper"
                 >
                     <button 
                         class="close-area"
-                        id="close-lower-area-one"
+                        id="close-lower-area"
                     >
                         close original file <span>&times;</span>
                     </button>
                     <textarea 
                         name="lower-area" 
-                        id="lower-area-one"
+                        id="lower-area"
                         cols="1"
                         class="code-area"
                     ></textarea>
@@ -99,98 +98,25 @@
             </div>
             <button 
                 class="btn beauty-btn"
-                id="beautify-one"
+                id="beautify"
             >
                 beautify
             </button>
             <input 
                 type="text" 
                 name="metadata" 
-                id="metadata-one" 
-                class="metadata"
-                size="1"
-                disabled="true"
-            >
-        </div>
-
-
-        <!-- SECOND PANEL (USED FOR JSON) -->
-
-        <div class="panel inverse" id="panel-two">
-            <div 
-                class="btn load-btn"
-                id="load-btn-two"
-            >
-                LOAD JSON
-                <input 
-                    size="1"
-                    type="file" 
-                    name="loader"
-                    id="loader-two" 
-                    class="load-input"
-                >
-            </div>
-            <button 
-                class="btn save-btn hidden"
-                id="save-btn-two"
-                disabled="true"
-            >
-                SAVE JSON
-            </button>
-            <div class="split-area" id="split-area-two">
-                <div 
-                    class="area-wrapper" 
-                    id="upper-area-wrapper-two"
-                >
-                    <button 
-                        class="close-area hidden"
-                        id="close-upper-area-two"
-                    >
-                        close result screen and go back to home 
-                       <span>&times;</span>
-                    </button>
-                    <textarea 
-                        name="upper-area" 
-                        id="upper-area-two"
-                        cols="1"
-                        class="code-area"
-                    ></textarea>
-                </div>
-                <div
-                    class="area-wrapper hidden" 
-                    id="lower-area-wrapper-two"
-                >
-                    <button 
-                        class="close-area"
-                        id="close-lower-area-two"
-                    >
-                        close original file <span>&times;</span>
-                    </button>
-                    <textarea 
-                        name="lower-area" 
-                        id="lower-area-two"
-                        cols="1"
-                        class="code-area"
-                    ></textarea>
-                </div>            
-            </div>
-            <button 
-                class="btn beauty-btn"
-                id="beautify-two"
-            >
-                beautify
-            </button>
-            <input 
-                type="text" 
-                name="metadata" 
-                id="metadata-two" 
+                id="metadata" 
                 class="metadata"
                 size="1"
                 disabled="true"
             >
         </div>
         <div class="commands">
-            <button class="btn convert-btn" id="convert-btn">
+            <button 
+                class="btn convert-btn" 
+                id="convert-btn"
+                disabled="true"
+            >
                 CONVERT!
             </button>
         </div>

@@ -2,102 +2,98 @@ import convertJsonToCsv from './jsonToCsv';
 import convertCsvToJson from './csvToJson';
 
 import './index.css';
-import './index1024.css';
+import {prettyPrint, saveFile} from './manageFiles';
+
 import {
     pageContainer, togglerBtn, displayOptions, 
-    swapAreasBtn, splitHBtn, splitVBtn, convertBtn, 
-    csvPanel, jsonPanel, saveCsvEditorBtn, 
-    saveJsonEditorBtn, loadCsvBtn, loadJsonBtn, 
-    loaderCsvInput, loaderJsonInput, beautifyCsvBtn, 
-    beautifyJsonBtn, csvEditorArea, jsonEditorArea, 
-    closeCsvEditorBtn, closeJsonEditorBtn, 
-    csvEditorSplitArea, jsonEditorSplitArea, 
-    csvEditorLowerArea, jsonEditorLowerArea, 
-    csvEditorLowerWrapperArea, jsonEditorLowerWrapperArea, 
-    closeCsvEditorLowerArea, closeJsonEditorLowerArea, 
-    csvMetadataInput, jsonMetadataInput
+    swapAreasBtn, splitHBtn, splitVBtn, panel, 
+    saveEditorBtn, loadBtn, loadTitleSpan, 
+    loaderInput, beautifyBtn, editorArea, 
+    closeEditorBtn, editorSplitArea, editorLowerArea, 
+    editorLowerWrapperArea, closeEditorLowerArea, 
+    metadataInput, convertBtn
 } from './domSelections';
-import { handleFileLoad } from './manageFiles';
 
 let csvToJson = true; 
 let conversionState = 0;
+let original, result = "";
 
-/* 
-class inverse change flex flow AND column position
-class active change ONLY column position
- */
 function reverse(){
     csvToJson = !csvToJson;
-    csvPanel.classList.toggle('inverse');
-    jsonPanel.classList.toggle('inverse');
-    csvEditorArea.value = "";
-    jsonEditorArea.value = "";
-    toggler.innerHTML = csvToJson ? "csv to json &rlarr;" : "json to csv &rlarr;"
+    editorArea.value = "";
+    metadataInput.value = "";
+    loaderInput.value = null;
+    convertBtn.disabled = true;
+    saveEditorBtn.disabled = true;
+    loadTitleSpan.innerText = csvToJson ? "LOAD CSV" : "LOAD JSON";
+    toggler.innerHTML = csvToJson ? "csv to json <span>&rlarr;</span>" : "json to csv <span>&rlarr;</span>"
 };
 
-function convert(){
-    if(window.innerWidth < 1024) {
-        if(csvToJson) {
-            csvPanel.classList.toggle('inverse');
-            jsonPanel.classList.toggle('active');
-            closeJsonEditorBtn.classList.toggle('hidden');
-            saveJsonEditorBtn.disabled = jsonEditorArea.value === "";
+function beautify(){
+    editorArea.value = csvToJson
+                        ? prettyPrint(editorArea.value, 'csv')
+                        : prettyPrint(editorArea.value, 'json');
+};
 
-            let parsed = convertCsvToJson(csvEditorArea.value, ',', false);
-            jsonEditorArea.value = JSON.stringify(parsed, undefined, 2);
-            jsonEditorLowerArea.value = csvEditorArea.value;
-        } else {
-            jsonPanel.classList.toggle('inverse');
-            csvPanel.classList.toggle('active');
-            closeCsvEditorBtn.classList.toggle('hidden');
-            saveCsvEditorBtn.disabled = csvEditorArea.value === "";
+function convert(){    
+    panel.classList.toggle('inverse');
+    closeEditorBtn.classList.toggle('hidden');
+    metadataInput.value = "";
+    loaderInput.value = null;
+    original = editorLowerArea.value = editorArea.value;
 
-            csvEditorArea.value  = convertJsonToCsv(jsonEditorArea.value, ',');
-            csvEditorLowerArea.value = jsonEditorArea.value;
-        }
- 
-        displayOptions.classList.toggle('hidden');
-        convertBtn.classList.toggle('hidden');
-        toggler.classList.toggle('hidden');
-    }
-
+    displayOptions.classList.toggle('hidden');
+    convertBtn.classList.toggle('hidden');
+    toggler.classList.toggle('hidden');
 
     if(conversionState) {
-        csvEditorArea.value = "";
-        jsonEditorArea.value = "";
-        csvMetadataInput.value = "";
-        jsonMetadataInput.value = "";
+        editorArea.value = "";
+        metadataInput.value = "";
+        editorLowerArea.value = "";
+        convertBtn.disabled = true;
 
-        csvToJson
-            ?   resetJsonPanel()
-            :   resetCsvPanel();
         conversionState = 0;
     } else {
+        convertFile();
         conversionState = 1;
     }
 };
 
-function swapResultOriginal(){
-    if(csvToJson) {
-        csvPanel.classList.toggle('inverse');
-        jsonPanel.classList.toggle('active');
-        loadCsvBtn.classList.toggle('disabled');
-        beautifyCsvBtn.classList.toggle('hidden');
-        removeJsonPanelSplit();
+function convertFile(){
+    saveEditorBtn.disabled = editorArea.value === "";
+    if(csvToJson ) {
+        let parsed = convertCsvToJson(original, ',', false)
+        result = editorArea.value = JSON.stringify(parsed, undefined, 2);
+
     } else {
-        jsonPanel.classList.toggle('inverse');
-        csvPanel.classList.toggle('active');
-        loadJsonBtn.classList.toggle('disabled');
-        beautifyJsonBtn.classList.toggle('hidden');
-        removeCsvPanelSplit();
+        let parsed = convertJsonToCsv(editorArea.value, ',', true)
+        result = editorArea.value = parsed;
     }
+}
+
+function save(){
     
+}
+
+function isAreaEmpty(e){
+    convertBtn.disabled = e.target.value === "";
+    saveEditorBtn.disabled = e.target.value === "";
+};
+
+function swapResultOriginal(){    
+    panel.classList.toggle('inverse');
+    loadBtn.classList.toggle('disabled');
+    beautifyBtn.classList.toggle('hidden');
+    closeEditorBtn.classList.toggle('hidden');
+
     if(conversionState) {
+        editorArea.value = original;
         swapAreasBtn.innerHTML = "&rarrhk; see result";
         splitHBtn.disabled = true;
         splitVBtn.disabled = true;
         conversionState = 0;
     } else {
+        editorArea.value = result;
         swapAreasBtn.innerHTML = "&larrhk; see original";
         splitHBtn.disabled = false;
         splitVBtn.disabled = false;
@@ -105,85 +101,41 @@ function swapResultOriginal(){
     }
 };
 
+
 function splitAreaVertically(){
-    if(csvToJson) {
-        if(jsonEditorSplitArea.classList.contains('h')) {
-            jsonEditorSplitArea.classList.remove('h')
-        } else {
-            jsonEditorLowerWrapperArea.classList.toggle('hidden');
-        }
+    // code area already splitted horizontally
+    if(editorSplitArea.classList.contains('h')) {
+        editorSplitArea.classList.remove('h')
     } else {
-        if(csvEditorSplitArea.classList.contains('h')) {
-            csvEditorSplitArea.classList.remove('h')
-        } else {
-            csvEditorLowerWrapperArea.classList.toggle('hidden');
-        }
+        editorLowerWrapperArea.classList.toggle('hidden');
     }
 };
 
 function splitAreaHorizontally(){
-    if(csvToJson) {
         // code area already splitted vertically
-        if(!jsonEditorLowerWrapperArea.classList.contains('hidden') &&
-          !jsonEditorSplitArea.classList.contains('h')) {
-            jsonEditorSplitArea.classList.add('h');
+        if(!editorLowerWrapperArea.classList.contains('hidden') &&
+          !editorSplitArea.classList.contains('h')) {
+            editorSplitArea.classList.add('h');
         } else {
-            jsonEditorSplitArea.classList.toggle('h');
-            jsonEditorLowerWrapperArea.classList.toggle('hidden');
+            editorSplitArea.classList.toggle('h');
+            editorLowerWrapperArea.classList.toggle('hidden');
         }
-    } else {
-        // code area already splitted vertically
-        if(!csvEditorLowerWrapperArea.classList.contains('hidden') &&
-          !csvEditorSplitArea.classList.contains('h')) {
-            csvEditorSplitArea.classList.add('h');
-        } else {
-            csvEditorSplitArea.classList.toggle('h');
-            csvEditorLowerWrapperArea.classList.toggle('hidden');
-        }
-    }
 };
 
-function checkIfEmpty(e){
-    if(csvToJson) {
-        saveJsonEditorBtn.disabled = e.target.value === "";
-    } else {
-        saveCsvEditorBtn.disabled = e.target.value === "";
-    }
-};
-
-function resetJsonPanel(){
-    jsonEditorArea.value = "";
-    removeCsvPanelSplit();
+function removePanelSplit(){
+    editorSplitArea.classList.remove('h');
+    editorLowerWrapperArea.classList.add('hidden');
 }
-
-function resetCsvPanel(){
-    csvEditorArea.value = "";
-    removeCsvPanelSplit();
-}
-
-function removeJsonPanelSplit(){
-    jsonEditorSplitArea.classList.remove('h');
-    jsonEditorLowerWrapperArea.classList.add('hidden');
-}
-
-function removeCsvPanelSplit(){
-    csvEditorSplitArea.classList.remove('h');
-    csvEditorLowerWrapperArea.classList.add('hidden');
-}
-
-jsonEditorArea.addEventListener('input', checkIfEmpty);
-csvEditorArea.addEventListener('input', checkIfEmpty);
 
 togglerBtn.addEventListener('click', reverse);
+beautifyBtn.addEventListener('click', beautify);
 convertBtn.addEventListener('click', convert);
 
+editorArea.addEventListener('input', isAreaEmpty);
 swapAreasBtn.addEventListener('click', swapResultOriginal);
-
-closeJsonEditorBtn.addEventListener('click', convert);
-closeCsvEditorBtn.addEventListener('click', convert);
+closeEditorBtn.addEventListener('click', convert);
 
 splitVBtn.addEventListener('click', splitAreaVertically);
 splitHBtn.addEventListener('click', splitAreaHorizontally);
 
-closeCsvEditorLowerArea.addEventListener('click', removeCsvPanelSplit);
-closeJsonEditorLowerArea.addEventListener('click', removeJsonPanelSplit);
+closeEditorLowerArea.addEventListener('click', removePanelSplit);

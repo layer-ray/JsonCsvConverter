@@ -1,5 +1,5 @@
 'use strict'
-export default function main(data, delimiter=','){
+export default function main(data, delimiter=',', firstLineHeader=true){
     let providedJson = JSON.parse(data);
     // Code works with array methods so it convert the provided json if it is not
     let jsonArray = Array.isArray(providedJson) ? providedJson : [providedJson];
@@ -18,11 +18,15 @@ export default function main(data, delimiter=','){
         console.log('something failed', e);
         return;
     };
-    // creates the header with the keys of the normalized json
+    
+    let finalCsv = [];
     let headerKeys = Object.keys(jsonArray[0]);
-    let header = headerKeys.join(delimiter);
+    // creates the header with the keys of the normalized json
+    if(firstLineHeader) {
+        let header = headerKeys.join(delimiter);
+        finalCsv.push(header);
+    }
 
-    let finalCsv = [header];
     for(let record of jsonArray) {
         let entries = Object.entries(record);
         let orderedEntries = [];

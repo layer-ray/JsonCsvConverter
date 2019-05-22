@@ -1,39 +1,20 @@
 import {
-    pageContainer, togglerBtn, displayOptions, 
-    swapAreasBtn, splitHBtn, splitVBtn, convertBtn, 
-    csvPanel, jsonPanel, saveCsvEditorBtn, 
-    saveJsonEditorBtn, loadCsvBtn, loadJsonBtn, 
-    loaderCsvInput, loaderJsonInput, beautifyCsvBtn, 
-    beautifyJsonBtn, csvEditorArea, jsonEditorArea, 
-    closeCsvEditorBtn, closeJsonEditorBtn, 
-    csvEditorSplitArea, jsonEditorSplitArea, 
-    csvEditorLowerArea, jsonEditorLowerArea, 
-    csvEditorLowerWrapperArea, jsonEditorLowerWrapperArea, 
-    closeCsvEditorLowerArea, closeJsonEditorLowerArea, 
-    csvMetadataInput, jsonMetadataInput
+    loaderInput, editorArea,
+    metadataInput
 } from './domSelections';
 
 import { checkEmbeddedLineTerminators } from './csvToJson';
 
-export function handleFileload(e){
-    let area, metadata, mimeTypes;
-
-    if(e.target.id === 'loader-one'){
-        area = csvEditorArea;
-        metadata = csvMetadataInput;
-        mimeTypes = ['text/csv', 'text/tsv'];
-    } else {
-        area = jsonEditorArea;
-        metadata = jsonMetadataInput;
-        mimeTypes = ['application/json'];
-    }
-
+function handleFileload(e){
+    const mimeTypes = ['text/csv', 'text/tsv', 'application/json'];
     const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onload = evt => {
-        area.value = evt.target.result;
-        metadata.value = `File name: ${file.name} - File size: ${file.size}`;
+        editorArea.value = evt.target.result;
+        metadataInput.value = `File name: ${file.name} - File size: ${file.size}`;
+        let event = new InputEvent('input')
+        editorArea.dispatchEvent(event);
     }
 
     if(!mimeTypes.includes(file.type)) {
@@ -43,19 +24,29 @@ export function handleFileload(e){
     reader.readAsText(file)
 }
 
-function prettyPrintCsv(){
-    const rawCsv = csvEditorArea.value;
-    const cleanCsv = padFields(rawCsv, ',');
-    csvEditorArea.value = cleanCsv;
+export function saveFile(data, filename, fileFormat = 'csv'){
+    if(fileFormat = 'csv') {
+        let blob = new Blob([data], {type: "text/csv;charset=utf-8"});
+        saveAs(blob, filename + '.csv');
+    } else {
+        let blob = new Blob([data], {type: "application/json;charset=utf-8"});
+        saveAs(blob, filename + '.json');
+    }    
 };
 
-function prettyPrintJson(){
-    const rawJson = jsonEditorArea.value;
-    const cleanJson = JSON.stringify(JSON.parse(rawJson), undefined, 2);
-    jsonEditorArea.value = cleanJson;
+export function prettyPrint(input, fileFormat = "csv"){
+    let parsed;
+
+    if(fileFormat === 'csv') {
+        parsed = padFields(input, ',');
+    } else {
+        parsed = JSON.stringify(JSON.parse(input), undefined, 2);
+    };
+
+    return parsed;
 };
 
-function padFields(tabledString, delimiter, pad=" "){
+function padFields(tabledString, delimiter=',', pad=" "){
     
     let cleanArr = checkEmbeddedLineTerminators(tabledString.split('\n'));
     let maxLength = 0;
@@ -85,10 +76,4 @@ function padFields(tabledString, delimiter, pad=" "){
     return newArr.join("\n");
 };
 
-
-
-loaderCsvInput.addEventListener('change', handleFileload);
-loaderJsonInput.addEventListener('change', handleFileload);
-
-beautifyCsvBtn.addEventListener('click', prettyPrintCsv); 
-beautifyJsonBtn.addEventListener('click', prettyPrintJson);
+loaderInput.addEventListener('change', handleFileload);
