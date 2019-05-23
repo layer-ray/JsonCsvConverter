@@ -152,6 +152,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
+    /* make button of default input big enough so cursor stick to pointer */
     font-size: 25rem;
     opacity: 0;
     cursor: pointer;
@@ -178,16 +179,18 @@ header {
 }
 
 .load-btn, .save-btn, .convert-btn {
+  display: block;
     padding-top: 0.5rem;
     color: var(--light-font);
 }
 
 .save-btn {
+  display: none;
     background-color: var(--success-color)
 }
 
 .beauty-btn {
-  margin-top: 1rem;
+  display: block;
   border: 1px solid var(--info-color);
   color: var(--info-color);
 }
