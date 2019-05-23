@@ -38,15 +38,18 @@
 }
 
 h2 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 /* PAGE LAYOUT */
 .main-container {
     display: flex;
     flex-flow: column nowrap;
-    padding: 2rem 0;
-    min-height: 100vh;
+    padding: 1rem 0;
+    height: 100vh;
+    max-width: 768px;
+    margin: auto;
+    /* get rid of h/v scrollbars in mobile */
     overflow: hidden;
 }
 
@@ -58,16 +61,21 @@ header {
   display: flex;
   flex-flow: column nowrap;
   flex-grow: 1;
+  margin: 1rem 0;
 }
 .panel.inverse {
   flex-flow: column-reverse nowrap;
+}
+
+.panel.stretch {
+  /* mantain 1rem space to bottom (convert button disappear) */
+  margin-bottom: 0;
 }
 
 /* header */
 .toggler-btn {
   border: 1px solid var(--dark-font);
   color: var(--dark-font);
-  margin: 0.5rem 0.5rem 0.5rem 0;
   border-radius: 15px;
 }
 
@@ -75,7 +83,6 @@ header {
 .header-options {
   display: flex;
   flex-flow: row nowrap;
-  margin-bottom: 1rem;
 }
 
 .header-options button{
@@ -165,7 +172,6 @@ header {
   position: relative;
   overflow: hidden;
   width: 100%;
-  flex-basis: 2rem;
 }
 
 .load-btn.disabled {
@@ -180,13 +186,13 @@ header {
 
 .load-btn, .save-btn, .convert-btn {
   display: block;
-    padding-top: 0.5rem;
-    color: var(--light-font);
+  padding-top: 0.5rem;
+  color: var(--light-font);
 }
 
 .save-btn {
   display: none;
-    background-color: var(--success-color)
+  background-color: var(--success-color)
 }
 
 .beauty-btn {
@@ -207,13 +213,6 @@ When inverse is applied:
 - load and beautify buttons are hidden
 - save button is visible
 */
-.load-btn, .beauty-btn {
-    display: block;
-}
-
-.save-btn {
-  display: none;
-}
 
 .inverse > .load-btn,
 .inverse > .beauty-btn {
