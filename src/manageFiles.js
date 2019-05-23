@@ -5,17 +5,22 @@ import {
 
 import { checkEmbeddedLineTerminators } from './csvToJson';
 
-function handleFileload(e){
-    const mimeTypes = ['text/csv', 'text/tsv', 'application/json'];
-    const file = e.target.files[0];
+export function loadFile(file, ext = "csv", cb){
     const reader = new FileReader();
+    let mimeTypes = ext === "csv" 
+            ?   ['text/csv', 'text/tsv']
+            :   ['application/json'];
 
     reader.onload = evt => {
-        editorArea.value = evt.target.result;
-        metadataInput.value = `File name: ${file.name} - File size: ${file.size}`;
-        let event = new InputEvent('input')
-        editorArea.dispatchEvent(event);
-    }
+        cb({
+            data: evt.target.result,
+            metadata: {
+                // remove extension
+                name: file.name.substring(0,file.name.lastIndexOf('.')),
+                size: file.size
+            }
+        });
+    };
 
     if(!mimeTypes.includes(file.type)) {
         console.log('file not supported!');
@@ -25,13 +30,12 @@ function handleFileload(e){
 }
 
 export function saveFile(data, filename, fileFormat = 'csv'){
-    if(fileFormat = 'csv') {
-        let blob = new Blob([data], {type: "text/csv;charset=utf-8"});
-        saveAs(blob, filename + '.csv');
-    } else {
-        let blob = new Blob([data], {type: "application/json;charset=utf-8"});
-        saveAs(blob, filename + '.json');
-    }    
+    let type = fileFormat === 'csv'
+                ? "text/csv;charset=utf-8"
+                : "application/json;charset=utf-8"
+          
+    let blob = new Blob([data], { type });
+    saveAs(blob, `${filename}.${fileFormat}`);
 };
 
 export function prettyPrint(input, fileFormat = "csv"){
@@ -76,4 +80,3 @@ function padFields(tabledString, delimiter=',', pad=" "){
     return newArr.join("\n");
 };
 
-loaderInput.addEventListener('change', handleFileload);

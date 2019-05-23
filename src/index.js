@@ -2,41 +2,48 @@ import convertJsonToCsv from './jsonToCsv';
 import convertCsvToJson from './csvToJson';
 
 import './index.css';
-import {prettyPrint, saveFile} from './manageFiles';
+import {prettyPrint, loadFile, saveFile} from './manageFiles';
 
 import {
     pageContainer, togglerBtn, displayOptions, 
     swapAreasBtn, splitHBtn, splitVBtn, panel, 
-    saveEditorBtn, loadBtn, loadTitleSpan, 
+    saveBtn, loadBtn, loadTitleSpan, 
     loaderInput, beautifyBtn, editorArea, 
     closeEditorBtn, editorSplitArea, editorLowerArea, 
     editorLowerWrapperArea, closeEditorLowerArea, 
     metadataInput, convertBtn
 } from './domSelections';
 
-let csvToJson = true; 
-let conversionState = 0;
-let original, result = "";
+//initial file format
+let iff = "csv";
+// final file format
+let eff = "json";
 
+// ui shows 'load panel' (0) or 'save panel' (1)
+let conversionState = 0;
+let original, fileMetadata, result = "";
+
+// Toggle between conversion modes (csvToJson / jsonToCsv)
 function reverse(){
-    csvToJson = !csvToJson;
+    iff = iff === "json" ? "csv" : "json";
+    eff = eff === "json" ? "csv" : "json";
     editorArea.value = "";
     metadataInput.value = "";
     loaderInput.value = null;
     convertBtn.disabled = true;
-    saveEditorBtn.disabled = true;
-    loadTitleSpan.innerText = csvToJson ? "LOAD CSV" : "LOAD JSON";
-    toggler.innerHTML = csvToJson ? "csv to json <span>&rlarr;</span>" : "json to csv <span>&rlarr;</span>"
+    saveBtn.disabled = true;
+    loadTitleSpan.innerText = `LOAD ${iff.toUpperCase()}`;
+    saveBtn.innertext = `SAVE ${eff.toUpperCase()}`
+    toggler.innerHTML = `${iff} to ${eff} <span>&rlarr;</span>`
 };
 
 function beautify(){
-    editorArea.value = csvToJson
-                        ? prettyPrint(editorArea.value, 'csv')
-                        : prettyPrint(editorArea.value, 'json');
+    editorArea.value = prettyPrint(editorArea.value, iff);
 };
 
 function convert(){    
     panel.classList.toggle('inverse');
+    panel.classList.toggle('stretch');
     closeEditorBtn.classList.toggle('hidden');
     metadataInput.value = "";
     loaderInput.value = null;
@@ -46,6 +53,9 @@ function convert(){
     convertBtn.classList.toggle('hidden');
     toggler.classList.toggle('hidden');
 
+    // If conversion state = 1 ui has been converted (along with the file)
+    // This allow to use the same function to 'convert' ui
+    // back to its original state and reset the content
     if(conversionState) {
         editorArea.value = "";
         metadataInput.value = "";
@@ -55,37 +65,51 @@ function convert(){
         conversionState = 0;
     } else {
         convertFile();
+        metadataInput.value = `Save file as: ${fileMetadata.name}.${eff}`
         conversionState = 1;
     }
 };
 
 function convertFile(){
-    saveEditorBtn.disabled = editorArea.value === "";
-    if(csvToJson ) {
+    saveBtn.disabled = editorArea.value === "";
+    if(iff === "csv") {
         let parsed = convertCsvToJson(original, ',', false)
         result = editorArea.value = JSON.stringify(parsed, undefined, 2);
-
     } else {
         let parsed = convertJsonToCsv(editorArea.value, ',', true)
         result = editorArea.value = parsed;
     }
 }
 
+function load(e){
+    loadFile(e.target.files[0], iff, content => {
+        editorArea.value = content.data;
+        fileMetadata = content.metadata;
+        metadataInput.value = `
+        File name: ${content.metadata.name}  - File size: ${content.metadata.size} bytes
+        `
+        
+        let event = new InputEvent('input')
+        editorArea.dispatchEvent(event);
+    });
+}
+
 function save(){
-    
+    saveFile(result, fileMetadata.name, eff);
 }
 
 function isAreaEmpty(e){
     convertBtn.disabled = e.target.value === "";
-    saveEditorBtn.disabled = e.target.value === "";
+    saveBtn.disabled = e.target.value === "";
 };
 
-function swapResultOriginal(){    
+// Once conversion is done you can look back at the original file
+function swapResultOriginal(){
     panel.classList.toggle('inverse');
     loadBtn.classList.toggle('disabled');
     beautifyBtn.classList.toggle('hidden');
     closeEditorBtn.classList.toggle('hidden');
-
+    metadataInput.classList.toggle('hidden');
     if(conversionState) {
         editorArea.value = original;
         swapAreasBtn.innerHTML = "&rarrhk; see result";
@@ -139,3 +163,7 @@ splitVBtn.addEventListener('click', splitAreaVertically);
 splitHBtn.addEventListener('click', splitAreaHorizontally);
 
 closeEditorLowerArea.addEventListener('click', removePanelSplit);
+
+
+loaderInput.addEventListener('change', load);
+saveBtn.addEventListener('click', save);
