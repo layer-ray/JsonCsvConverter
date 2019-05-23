@@ -27,8 +27,12 @@ export default function main(data, delimiter=',', firstlineHeader=false)
         for(let i=0; i<fields.length; i++){
             // remove unnecessary double quotes 
             let currentKey = keys[i].replace(/"/g, "");
-            let currentValue = fields[i].replace(/"/g, "").trim();
-
+            let currentValue;
+            if(currentValue === ""){
+                currentValue = null
+            } else {
+                currentValue = fields[i].replace(/"/g, "").trim();
+            }
             tmp[currentKey] = currentValue;
         };
         resultJson.push(tmp);
@@ -38,6 +42,7 @@ export default function main(data, delimiter=',', firstlineHeader=false)
 }
 
 // Check if all rows have the same amount of fields
+// set null unset values
 function validateCSV(csvArray, del) {
     // Extract the number of fields of the first row
     let splittedRowsArray = [csvArray[0].split(del)];
