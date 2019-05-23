@@ -12,7 +12,7 @@ export const splitVBtn = document.querySelector('#split-v');
 
 export const panel = document.querySelector('#panel');
 
-export const saveEditorBtn = document.querySelector('#save-btn');
+export const saveBtn = document.querySelector('#save-btn');
 
 export const loadBtn = document.querySelector('#load-btn');
 
