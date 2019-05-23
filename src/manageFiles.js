@@ -7,12 +7,13 @@ import { checkEmbeddedLineTerminators } from './csvToJson';
 
 export function loadFile(file, ext = "csv", cb){
     const reader = new FileReader();
+    let supportedTypes = ['text/plain','text/csv', 'text/tsv','application/json'];
     let mimeTypes = ext === "csv" 
-            ?   ['text/csv', 'text/tsv']
-            :   ['application/json'];
+            ?   ['text/plain','text/csv', 'text/tsv']
+            :   ['text/plain','application/json'];
 
     reader.onload = evt => {
-        cb({
+        cb(null, {
             data: evt.target.result,
             metadata: {
                 // remove extension
@@ -23,17 +24,20 @@ export function loadFile(file, ext = "csv", cb){
     };
 
     if(!mimeTypes.includes(file.type)) {
-        console.log('file not supported!');
-        return;
+        if(!supportedTypes.includes(file.type)) {
+            cb(Error(`file ${file.type} not supported!`));
+        } else {
+            cb(Error(`Please switch mode to handle this kind of file (${file.type})`));
+        }
     }
     reader.readAsText(file)
 }
 
 export function saveFile(data, filename, fileFormat = 'csv'){
     let type = fileFormat === 'csv'
-                ? "text/csv;charset=utf-8"
-                : "application/json;charset=utf-8"
-          
+            ? "text/csv;charset=utf-8"
+            : "application/json;charset=utf-8"
+
     let blob = new Blob([data], { type });
     saveAs(blob, `${filename}.${fileFormat}`);
 };
@@ -79,4 +83,3 @@ function padFields(tabledString, delimiter=',', pad=" "){
     
     return newArr.join("\n");
 };
-

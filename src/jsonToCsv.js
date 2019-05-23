@@ -3,20 +3,15 @@ export default function main(data, delimiter=',', firstLineHeader=true){
     let providedJson = JSON.parse(data);
     // Code works with array methods so it convert the provided json if it is not
     let jsonArray = Array.isArray(providedJson) ? providedJson : [providedJson];
-
-    try {
-        /* 
-        - find all the keys present in the json objects
-        - set each missing key on each json to null value
-            */
-        jsonArray = normalizeJSONKeys(jsonArray);
-        for (let i=0; i<jsonArray.length; i++) {
-            // check json field to be valid as csv field
-            jsonArray[i] = normalizeJSONValues(jsonArray[i], delimiter);
-        };
-    } catch(e){
-        console.log('something failed', e);
-        return;
+    
+    /* 
+    - find all the keys present in the json objects
+    - set each missing key on each json to null value
+        */
+    jsonArray = normalizeJSONKeys(jsonArray);
+    for (let i=0; i<jsonArray.length; i++) {
+        // check json field to be valid as csv field
+        jsonArray[i] = normalizeJSONValues(jsonArray[i], delimiter);
     };
     
     let finalCsv = [];
@@ -77,6 +72,7 @@ function normalizeJSONValues(jsonObj, del){
     let error = null;
     // check all fields of all json objects
     for (let entry of entries) {
+
         // first-level array ( allowed if not array of objects)
         if (Array.isArray(entry[1])){
             for (let element of entry[1]) {

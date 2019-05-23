@@ -40,61 +40,82 @@ function reverse(){
 };
 
 function beautify(){
-    editorArea.value = prettyPrint(editorArea.value, iff);
+    try {
+        editorArea.value = prettyPrint(editorArea.value, iff);
+    } catch (err) {
+        let displayedMessage = err.message.startsWith('JSON.parse')
+                                ? err.message.replace('JSON.parse: ','')
+                                : err.message;
+        displayNotification(`Error - invalid ${iff}`, displayedMessage, 'error');
+        return;
+    }
 };
 
 function convert(){    
+    // If conversion state = 1 ui has been converted (along with the file)
+    // This allow to use the same function to 'convert' ui
+    // back to its original state and reset the content
+    original = editorLowerArea.value = editorArea.value;
+    try {
+        if(conversionState) {
+            editorArea.value = "";
+            metadataInput.value = "";
+            editorLowerArea.value = "";
+            convertBtn.disabled = true;
+            removePanelSplit();
+
+            conversionState = 0;
+        } else {
+            convertFile();
+            displayNotification(`Conversion successful!`, "", 'success', true);
+            metadataInput.value = `Save file as: ${fileMetadata.name}.${eff}`
+            conversionState = 1;
+        }
+    } catch(err){
+        let displayedMessage = err.message.startsWith('JSON.parse')
+                                ? err.message.replace('JSON.parse: ','')
+                                : err.message;
+        displayNotification(`Error - invalid ${iff}`, displayedMessage, 'error');
+        return;
+    }
+    
     panel.classList.toggle('inverse');
     panel.classList.toggle('stretch');
     closeEditorBtn.classList.toggle('hidden');
     metadataInput.value = "";
     loaderInput.value = null;
-    original = editorLowerArea.value = editorArea.value;
-
+    
     displayOptions.classList.toggle('hidden');
     convertBtn.classList.toggle('hidden');
     toggler.classList.toggle('hidden');
-
-    // If conversion state = 1 ui has been converted (along with the file)
-    // This allow to use the same function to 'convert' ui
-    // back to its original state and reset the content
-    if(conversionState) {
-        editorArea.value = "";
-        metadataInput.value = "";
-        editorLowerArea.value = "";
-        convertBtn.disabled = true;
-            removePanelSplit();
-
-        conversionState = 0;
-    } else {
-        convertFile();
-        metadataInput.value = `Save file as: ${fileMetadata.name}.${eff}`
-        conversionState = 1;
-    }
 };
 
 function convertFile(){
     saveBtn.disabled = editorArea.value === "";
-    if(iff === "csv") {
-        let parsed = convertCsvToJson(original, ',', false)
-        result = editorArea.value = JSON.stringify(parsed, undefined, 2);
-    } else {
-        let parsed = convertJsonToCsv(editorArea.value, ',', true)
-        result = editorArea.value = parsed;
-    }
+        if(iff === "csv") {
+            let parsed = convertCsvToJson(original, ',', false)
+            result = editorArea.value = JSON.stringify(parsed, undefined, 2);
+        } else {
+            let parsed = convertJsonToCsv(editorArea.value, ',', true)
+            result = editorArea.value = parsed;
+        }
+
 }
 
 function load(e){
-    loadFile(e.target.files[0], iff, content => {
-        editorArea.value = content.data;
-        fileMetadata = content.metadata;
-        metadataInput.value = `
-        File name: ${content.metadata.name}  - File size: ${content.metadata.size} bytes
-        `
-        
-        let event = new InputEvent('input')
-        editorArea.dispatchEvent(event);
-    });
+    loadFile(e.target.files[0], iff, (err, content) => {
+            if(err){
+                displayNotification(`Error`, err, 'error');
+                throw Error();
+            }
+            editorArea.value = content.data;
+            fileMetadata = content.metadata;
+            metadataInput.value = `
+            File name: ${content.metadata.name}  - File size: ${content.metadata.size} bytes`
+            
+            let event = new InputEvent('input')
+            editorArea.dispatchEvent(event);
+        });    
 }
 
 function save(){
@@ -125,6 +146,7 @@ function swapResultOriginal(){
     beautifyBtn.classList.toggle('hidden');
     closeEditorBtn.classList.toggle('hidden');
     metadataInput.classList.toggle('hidden');
+
     if(conversionState) {
         editorArea.value = original;
         removePanelSplit();
@@ -185,11 +207,13 @@ function closeNotification(){
        notification.classList.remove('enter');
        notification.classList.add('exit');
 }
+
 togglerBtn.addEventListener('click', reverse);
 beautifyBtn.addEventListener('click', beautify);
 convertBtn.addEventListener('click', convert);
 
 editorArea.addEventListener('input', isAreaEmpty);
+editorArea.addEventListener('paste', getMetadataFromText);
 swapAreasBtn.addEventListener('click', swapResultOriginal);
 closeEditorBtn.addEventListener('click', convert);
 
@@ -201,4 +225,5 @@ closeEditorLowerArea.addEventListener('click', removePanelSplit);
 
 loaderInput.addEventListener('change', load);
 saveBtn.addEventListener('click', save);
+
 closeNotificationBtn.addEventListener('click', closeNotification);

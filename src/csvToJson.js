@@ -4,20 +4,16 @@ export default function main(data, delimiter=',', firstlineHeader=false)
     let rows = data.split('\n');
     let keys, values;
 
-    try {
-        let cleanRows = checkEmbeddedLineTerminators(rows);
-        let result = validateCSV(cleanRows, delimiter);
-        // It generates a default key name if the header is not provided
-        if(firstlineHeader){
-            keys = result[0];
-            values = result.slice(1);
-        } else {
-            keys = result[0].map((_, idx) => 'key_' + (+idx+1))
-            values = result;
-        }
-    } catch(err){
-        console.log('Something went wrong.\n', err.message);
-        return;
+    
+    let cleanRows = checkEmbeddedLineTerminators(rows);
+    let result = validateCSV(cleanRows, delimiter);
+    // It generates a default key name if the header is not provided
+    if(firstlineHeader){
+        keys = result[0];
+        values = result.slice(1);
+    } else {
+        keys = result[0].map((_, idx) => 'key_' + (+idx+1))
+        values = result;
     }
 
     // build json from csv cleaned data
@@ -70,7 +66,7 @@ function validateCSV(csvArray, del) {
     };
 
     if(Object.keys(log).length !== 0) {
-        throw Error(JSON.stringify(log));
+        throw Error(log.join('\n'));
     }
 
     return splittedRowsArray;
@@ -127,10 +123,7 @@ export function checkEmbeddedLineTerminators(rows) {
 function countCharInString(char, str, start=0){
     let occurrences = [];
     let ix = str.indexOf(char, start);
-    
-    // if char if found in str starts a loop looking
-    // for the char starting the search one char after
-    // the first one found
+
     while(ix !== -1) {
         occurrences.push(ix);
         ix = str.indexOf(char, ix + 1);
