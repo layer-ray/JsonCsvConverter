@@ -59,6 +59,22 @@ ___
 - Split row  at delimiter
 - Loop through array _(basic for)_
     - Split row at delimiter
+        `checkEmbeddedLineTerminators`
+        - Clone array
+        - Loop through row array clone _(for of)_
+
+            `countCharInString`
+            - Index of char inside field record string
+            - Loop until no more char are found _(while)_
+
+        `checkEmbeddedLineTerminators`
+        - Conditional error _(if)_
+        - Loop until no more uncomplete records are found _(do while)_
+            - Loop through Array _(basic for)_
+
+            `countCharInString`
+                - Index of char inside string
+                - Loop until no more char are found _(while)_
     - Conditional _(if)_ contains conditional _(if)_
 - Conditional _(if)_
 

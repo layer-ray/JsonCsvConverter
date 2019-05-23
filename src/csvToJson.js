@@ -45,19 +45,23 @@ export default function main(data, delimiter=',', firstlineHeader=false)
 // set null unset values
 function validateCSV(csvArray, del) {
     // Extract the number of fields of the first row
-    let splittedRowsArray = [csvArray[0].split(del)];
+    let atomicFirstLineFields = csvArray[0].split(del);
+    let splittedRowsArray = [checkEmbeddedLineTerminators(atomicFirstLineFields)];
+
     let max_fields = splittedRowsArray[0].length;
-    let log = {};
+    let log = [];
 
     // compare the number of fields of each row 
     for (let i=1; i < csvArray.length; i++) {
-        let fields = csvArray[i].split(del);
+        let atomicFields = csvArray[i].split(del);
+        let fields = checkEmbeddedLineTerminators(atomicFields);
+
         splittedRowsArray.push(fields);
 
         // if fields are different from the max_fields stores a 
         // log message and (possibly) update the max_fields var
         if (fields.length !== max_fields) {
-            log["row_"+(i+1)] = `Different number of fields detected at line ${i+1} (other_rows_current_max_fields: ${max_fields}, own_fields: ${fields.length})`;
+            log.push(`row_${i+1}: Different number of fields detected at line ${i+1} (other_rows_current_max_fields: ${max_fields}, own_fields: ${fields.length})`);
 
             if(fields.length > max_fields) {
                 max_fields = fields.length;
