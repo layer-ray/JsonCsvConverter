@@ -102,9 +102,13 @@ function normalizeJSONValues(jsonObj, del){
             jsonObj[entry[0]] = entry[1].toString().replace(/"/g, "\"\"")
         };
 
-        // enclose each entry that contains the delimiter between double quotes
-        // as per csv spec
-        if(entry[1] && (entry[1].toString().indexOf(del) !== -1 ) ){
+        // enclose each entry that contains the delimiter between 
+        // double quotes as per csv spec
+        // enclose also entries with line terminator character to 
+        // let them  be recognizable 
+        if(entry[1] && ((entry[1].toString().indexOf(del)  !== -1 ) ||
+                        (entry[1].toString().indexOf('\r') !== -1 ) ||
+                        (entry[1].toString().indexOf('\n') !== -1 ))){
                 jsonObj[entry[0]] = `"${entry[1].toString()}"`
         };
     };

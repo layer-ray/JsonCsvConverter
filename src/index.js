@@ -33,7 +33,7 @@ function reverse(){
     convertBtn.disabled = true;
     saveBtn.disabled = true;
     loadTitleSpan.innerText = `LOAD ${iff.toUpperCase()}`;
-    saveBtn.innertext = `SAVE ${eff.toUpperCase()}`
+    saveBtn.innerText = `SAVE ${eff.toUpperCase()}`
     toggler.innerHTML = `${iff} to ${eff} <span>&rlarr;</span>`
 };
 
@@ -61,6 +61,7 @@ function convert(){
         metadataInput.value = "";
         editorLowerArea.value = "";
         convertBtn.disabled = true;
+            removePanelSplit();
 
         conversionState = 0;
     } else {
@@ -112,6 +113,7 @@ function swapResultOriginal(){
     metadataInput.classList.toggle('hidden');
     if(conversionState) {
         editorArea.value = original;
+        removePanelSplit();
         swapAreasBtn.innerHTML = "&rarrhk; see result";
         splitHBtn.disabled = true;
         splitVBtn.disabled = true;
