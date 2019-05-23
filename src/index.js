@@ -21,7 +21,7 @@ let eff = "json";
 
 // ui shows 'load panel' (0) or 'save panel' (1)
 let conversionState = 0;
-let original, fileMetadata, result = "";
+let original, fileMetadata="", result = "";
 
 // Toggle between conversion modes (csvToJson / jsonToCsv)
 function reverse(){
@@ -97,6 +97,18 @@ function load(e){
 
 function save(){
     saveFile(result, fileMetadata.name, eff);
+}
+
+// get pasted text to display its size
+function getMetadataFromText(e){
+    let pastedText = e.clipboardData.getData('text/plain');
+    fileMetadata = {
+        name: 'myFile',
+        size: pastedText.length
+    }
+    metadataInput.value = `
+        File name: ${fileMetadata.name}  - File size: approx. ${fileMetadata.size} bytes
+    `
 }
 
 function isAreaEmpty(e){

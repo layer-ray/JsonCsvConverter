@@ -133,6 +133,13 @@ header {
 
 .metadata {
   padding: 0.5rem;
+  border-left: 1px solid var(--code-background);
+  border-right: 1px solid var(--code-background);
+  background-color: var(--grey-color);
+  color: var(--dark-font);
+}
+.inverse .metadata {
+  order: -1;
 }
 /* html entities  */
 .close-area span,
@@ -221,6 +228,8 @@ When inverse is applied:
 
 .inverse > .save-btn {
   display: block;
+  /* appear after metadata input */
+  order: -2
 }
 
 /* GENERAL */
