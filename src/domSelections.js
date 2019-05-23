@@ -37,13 +37,8 @@ export const metadataInput = document.querySelector('#metadata');
 
 export const convertBtn = document.querySelector('#convert-btn');
 
+export const notification = document.querySelector('#notification');
 
-
-
-
-
-
-
-
-
-
+export const closeNotificationBtn = document.querySelector('#notification button');
+export const notificationTitle = document.querySelector('#notification-title');
+export const notificationBody = document.querySelector('#notification-body');

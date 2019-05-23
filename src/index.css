@@ -4,8 +4,10 @@
   
   --info-color: #242688;
   --success-color: #146816;
+  --success-color-light: #8cfa8c;
   --danger-color: #aa2250;
-  --grey-color: #888;
+  --danger-color-light: #dd99cb;
+  --grey-color: #aaa;
 
 
   --dark-font: #111;
@@ -235,4 +237,76 @@ When inverse is applied:
 /* GENERAL */
 .hidden {
   display: none;
+}
+/* NOTIFICATION */
+.notification {
+  position: absolute;
+  margin: auto;
+  width: 80vw;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: auto;
+  top: -100%;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  padding: 1rem;
+  border-radius: 15px;
+
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--dark-font);
+}
+
+.notification-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.error {
+  border: 2px solid var(--danger-color);
+  background-color: var(--danger-color-light);
+}
+
+.success {
+  border: 2px solid var(--success-color);
+  background-color: var(--success-color-light);
+}
+
+.enter {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+.exit {
+  animation: slideOut 0.5s ease-in forwards;
+}
+
+.tmp {
+  opacity: 0;
+  top: 10vh;
+  animation: fadeInOut 2s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0%   {opacity: 0}
+  20%  {opacity: 1}
+  80%  {opacity: 1}
+  100% {opacity: 0}
+}
+
+@keyframes slideIn {
+  from {top: -100%}
+  to {top: 10vh;}
+}
+
+@keyframes slideOut {
+  from {top: 10vh}
+  to {top: -100%}
 }

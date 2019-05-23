@@ -11,7 +11,9 @@ import {
     loaderInput, beautifyBtn, editorArea, 
     closeEditorBtn, editorSplitArea, editorLowerArea, 
     editorLowerWrapperArea, closeEditorLowerArea, 
-    metadataInput, convertBtn
+    metadataInput, convertBtn, notification,
+    closeNotificationBtn, notificationBody,
+    notificationTitle
 } from './domSelections';
 
 //initial file format
@@ -165,6 +167,24 @@ function removePanelSplit(){
     editorLowerWrapperArea.classList.add('hidden');
 }
 
+function displayNotification(title, message, type="error", tmp=false){
+    notificationTitle.innerText = title;
+    notificationBody.innerText = message;
+    notification.classList.add(type);
+    if(tmp) {
+        notification.classList.remove('exit');
+        notification.classList.add('tmp');
+    } else {
+        notification.classList.remove('tmp');
+        notification.classList.remove('exit');
+        notification.classList.add('enter');
+    }
+}
+
+function closeNotification(){    
+       notification.classList.remove('enter');
+       notification.classList.add('exit');
+}
 togglerBtn.addEventListener('click', reverse);
 beautifyBtn.addEventListener('click', beautify);
 convertBtn.addEventListener('click', convert);
@@ -181,3 +201,4 @@ closeEditorLowerArea.addEventListener('click', removePanelSplit);
 
 loaderInput.addEventListener('change', load);
 saveBtn.addEventListener('click', save);
+closeNotificationBtn.addEventListener('click', closeNotification);
