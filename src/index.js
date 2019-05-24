@@ -13,7 +13,8 @@ import {
     editorLowerWrapperArea, closeEditorLowerArea, 
     metadataInput, convertBtn, notification,
     closeNotificationBtn, notificationBody,
-    notificationTitle
+    notificationTitle, spacerWrapper,
+    pathWrapper
 } from './domSelections';
 
 //initial file format
@@ -142,7 +143,9 @@ function isAreaEmpty(e){
 // Once conversion is done you can look back at the original file
 function swapResultOriginal(){
     panel.classList.toggle('inverse');
-    loadBtn.classList.toggle('disabled');
+    loadBtn.classList.toggle('hidden');
+    spacerWrapper.classList.toggle('hidden');
+    pathWrapper.classList.toggle('hidden');
     beautifyBtn.classList.toggle('hidden');
     closeEditorBtn.classList.toggle('hidden');
     metadataInput.classList.toggle('hidden');
