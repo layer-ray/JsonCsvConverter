@@ -41,7 +41,7 @@
             </div>
         </header>
 
-        <!-- FIRST PANEL (USED FOR CSV) -->
+        <!-- PANEL -->
 
         <div class="panel" id="panel">
             <div 
@@ -128,14 +128,34 @@
                 beautify
             </button>
         </div>
-        <div class="commands">
-            <button 
-                class="btn convert-btn" 
-                id="convert-btn"
-                disabled="true"
-            >
-                CONVERT!
-            </button>
+        <div class="commands" id="commands">
+            <div class="field">
+                <label for="delimiter">csv delimiter</label>
+                <input 
+                    type="text" 
+                    name="delimiter" 
+                    id="delimiter"
+                    maxlength="1"
+                    placeholder=","
+                >
+            </div>
+            <div class="field">
+                <label for="first-line">use first line as header</label>
+                <input 
+                    type="checkbox" 
+                    name="first-line" 
+                    id="first-line"
+                >
+            </div>
+            <div class="field">
+                    <button 
+                    class="btn convert-btn" 
+                    id="convert-btn"
+                    disabled="true"
+                >
+                    CONVERT!
+                </button>
+            </div>
         </div>
     </div>
 </body>

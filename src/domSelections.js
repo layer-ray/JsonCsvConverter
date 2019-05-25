@@ -44,9 +44,6 @@ export const notification = document.querySelector('#notification');
 export const closeNotificationBtn = document.querySelector('#notification button');
 export const notificationTitle = document.querySelector('#notification-title');
 export const notificationBody = document.querySelector('#notification-body');
-
-export const spacerWrapper = document.querySelector('#spacer-wrapper');
-export const pathWrapper = document.querySelector('#path-wrapper');
-
-export const pathInput = document.querySelector('#path');
-export const submitBtn = document.querySelector('#submit-btn');
+export const delimiterInput = document.querySelector('#delimiter');
+export const firstLineBox = document.querySelector('#first-line');
+export const commands = document.querySelector('#commands');

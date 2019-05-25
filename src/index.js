@@ -14,7 +14,8 @@ import {
     metadataInput, convertBtn, notification,
     closeNotificationBtn, notificationBody,
     notificationTitle, metadataWrapper,
-    metadataLabel
+    metadataLabel, delimiterInput, firstLineBox,
+    commands
 } from './domSelections';
 
 //initial file format
@@ -25,6 +26,10 @@ let eff = "json";
 // ui shows 'load panel' (0) or 'save panel' (1)
 let conversionState = 0;
 let original, fileMetadata="", result = "";
+
+// on refresh mozilla do not empty text values
+editorArea.value = "";
+metadataInput.value = "";
 
 // Toggle between conversion modes (csvToJson / jsonToCsv)
 function reverse(){
@@ -90,17 +95,18 @@ function convert(){
     loaderInput.value = null;
     
     displayOptions.classList.toggle('hidden');
-    convertBtn.classList.toggle('hidden');
     toggler.classList.toggle('hidden');
 };
 
 function convertFile(){
     saveBtn.disabled = editorArea.value === "";
+    let delimiter = delimiterInput.value;
+    let head = firstLineBox.checked;
         if(iff === "csv") {
-            let parsed = convertCsvToJson(original, ',', false)
+            let parsed = convertCsvToJson(original, delimiter,  head)
             result = editorArea.value = JSON.stringify(parsed, undefined, 2);
         } else {
-            let parsed = convertJsonToCsv(editorArea.value, ',', true)
+            let parsed = convertJsonToCsv(editorArea.value, delimiter,  head)
             result = editorArea.value = parsed;
         }
 
@@ -151,6 +157,7 @@ function swapResultOriginal(){
     beautifyBtn.classList.toggle('hidden');
     closeEditorBtn.classList.toggle('hidden');
     metadataWrapper.classList.toggle('hidden');
+    commands.classList.toggle('hidden');
 
     if(conversionState) {
         editorArea.value = original;

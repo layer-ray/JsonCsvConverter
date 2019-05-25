@@ -244,6 +244,51 @@ label.disabled {
   background-color: var(--info-color);
 }
 
+.commands {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.field{
+  display: flex;
+  flex: 1 1 10%;
+  align-items: center;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.field > *:first-child { 
+  flex-grow: 1;
+  text-align: center;
+  align-content: center;
+ }
+
+.field > *:nth-child(2) { 
+  flex-grow: 0.2;
+  margin-right: 2rem;
+}
+
+.field input[type=text]{
+  text-align: center;
+  /* align with checkbox */
+  margin-right: 11%;
+  max-width: 1.5rem;
+  font-size: 1.2rem;
+  border: 3px dashed var(--grey-font);
+}
+
+@media(max-width: 640px) {
+  .field:last-child {
+    flex-basis: 100%;
+    margin-top: 1rem;
+  }
+}
+@media(max-width: 480px) {
+  .field:first-child {
+    flex-basis: 100%;
+    margin-bottom: 1rem;
+  }
+}
 /* PANEL ELEMENTS LOGIC 
 When inverse is not applied:
  - load and beautify buttons are visible
@@ -252,9 +297,9 @@ When inverse is applied:
 - load and beautify buttons are hidden
 - save button is visible
 */
-
+.inverse > .commands,
 .inverse > .load-btn,
-.inverse > .beauty-btn{
+.inverse > .beauty-btn {
   display: none;
 }
 
