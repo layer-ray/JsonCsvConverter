@@ -25,7 +25,11 @@ let eff = "json";
 
 // ui shows 'load panel' (0) or 'save panel' (1)
 let conversionState = 0;
-let original, fileMetadata="", result = "";
+let original, result = "";
+let fileMetadata = {
+    name: "myFile",
+    size: 0
+};
 
 // on refresh mozilla do not empty text values
 editorArea.value = "";
@@ -216,8 +220,6 @@ function displayNotification(title, message, type="error", tmp=false){
             notification.classList.add('fade-out');
         }, 1000);
     } else {
-        notification.classList.remove('tmp');
-        notification.classList.remove('exit');
         notification.classList.add('enter');
     }
 }
