@@ -43,6 +43,7 @@ function reverse(){
     metadataInput.value = "";
     loaderInput.value = null;
     convertBtn.disabled = true;
+    beautifyBtn.disabled = true;
     saveBtn.disabled = true;
     loadTitleSpan.innerText = `SELECT ${iff.toUpperCase()} FILE`;
     saveBtn.innerText = `SAVE ${eff.toUpperCase()}`
@@ -152,6 +153,7 @@ function getMetadataFromText(e){
 function isAreaEmpty(e){
     convertBtn.disabled = e.target.value === "";
     saveBtn.disabled = e.target.value === "";
+    beautifyBtn.disabled = e.target.value === "";
 };
 
 // Once conversion is done you can look back at the original file
