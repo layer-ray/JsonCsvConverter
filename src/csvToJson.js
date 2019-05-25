@@ -10,7 +10,9 @@ export default function main(data, delimiter=',', firstlineHeader=false)
     // It generates a default key name if the header is not provided
     if(firstlineHeader){
         keys = result[0];
-        values = result.slice(1);
+        values = result.length > 1 
+                    ? result.slice(1)
+                    : result[0].map(_ => "test");
     } else {
         keys = result[0].map((_, idx) => 'key_' + (+idx+1))
         values = result;
@@ -18,8 +20,12 @@ export default function main(data, delimiter=',', firstlineHeader=false)
 
     // build json from csv cleaned data
     let resultJson = [];
-    for (const fields of values) {
+    for (let fields of values) {
         let tmp = {};
+        // handle single column csv (residual of reshaping?)
+        if(!Array.isArray(fields)) {
+            fields = [fields]
+        };
         for(let i=0; i<fields.length; i++){
             // remove unnecessary double quotes 
             let currentKey = keys[i].replace(/"/g, "");
@@ -31,6 +37,7 @@ export default function main(data, delimiter=',', firstlineHeader=false)
             }
             tmp[currentKey] = currentValue;
         };
+        console.log('tmp', tmp)
         resultJson.push(tmp);
     };
 
@@ -131,4 +138,3 @@ function countCharInString(char, str, start=0){
     
     return occurrences;
 };
-
