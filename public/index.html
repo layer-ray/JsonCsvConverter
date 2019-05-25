@@ -7,46 +7,60 @@
     <title>JSON|CSV converter</title>
 </head>
 <body>
-    <div class="notification" id="notification">
-        <button class="btn notification-btn">&times;</button>
-        <h4 id="notification-title"></h4>
-        <div id="notification-body"></div>
-    </div>
+    <h2 class="title"> JSON | CSV CONVERTER </h2>
     <div class="main-container" id="main-container">
         <header>
-            <h2> JSON | CSV CONVERTER </h2>
-            <button id="toggler" class="btn toggler-btn">csv to json 
-            <span>&rlarr;</span></button>
-            <div class="header-options hidden" id="header-options">
+            <h4 class="hidden-outline">toggle conversion option</h4>
+            <button id="toggler" class="btn toggler-btn">
+                csv to json 
+                <span aria-hidden="true" role="img">
+                    &rlarr;
+                </span>
+            </button>
+            <nav class="header-options hidden" id="header-options">
+                <h4 class="hidden-outline">result display options</h4>
                 <button 
                     class="btn btn-toggle-areas"
                     id="swap-areas"
                 >
-                    <span>&larrhk;</span>  see original
+                    <span aria-hidden="true" role="img">
+                        &larrhk;
+                    </span>  
+                    see original
                 </button>
                 <div class="splitters">
                      <button 
                         class="btn btn-split-h"
                         id="split-h"
                     >
-                        <span>&#8614;</span> split h
+                        <span aria-hidden="true" role="img" >
+                            &#8614;
+                        </span> 
+                        split h
                     </button>
                     <button 
                         class="btn btn-split-v"
                         id="split-v"
                     >
-                        <span>&mapstodown;</span> split v
+                        <span aria-hidden="true" role="img" >
+                            &mapstodown;
+                        </span> 
+                        split v
                     </button>
                 </div>
-            </div>
+            </nav>
         </header>
 
         <!-- PANEL -->
 
-        <div class="panel" id="panel">
+        <main class="panel" id="panel">
+            <h4 class="hidden-outline">code panel (load/save included)</h4>
+            <!-- 'button' is not used because semantics 
+                is given by the underlying 'input:file' element -->
             <div 
                 class="btn load-btn"
                 id="load-btn"
+                role="button"
             >
                 <span>SELECT CSV FILE</span>
                 <input 
@@ -127,8 +141,9 @@
             >
                 beautify
             </button>
-        </div>
-        <div class="commands" id="commands">
+        </main>
+        <footer class="commands" id="commands">
+            <h4 class="hidden-outline">commands and options</h4>
             <div class="field">
                 <label for="delimiter">csv delimiter</label>
                 <input 
@@ -145,6 +160,7 @@
                     type="checkbox" 
                     name="first-line" 
                     id="first-line"
+                    value="first-line"
                 >
             </div>
             <div class="field">
@@ -156,6 +172,16 @@
                     CONVERT!
                 </button>
             </div>
+        </footer>
+        <div 
+            class="notification" 
+            id="notification" 
+            role="notification"
+        >
+            <h4 class="hidden-outline">notification</h4>
+                <button class="btn notification-btn">&times;</button>
+                <h4 id="notification-title"></h4>
+                <div id="notification-body"></div>
         </div>
     </div>
 </body>

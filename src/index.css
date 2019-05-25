@@ -58,7 +58,7 @@ hr {
     display: flex;
     flex-flow: column nowrap;
     padding: 1rem 0;
-    height: 100vh;
+    height: calc(100vh - 3.7rem);
     max-width: 768px;
     margin: auto;
     /* get rid of h/v scrollbars in mobile */
@@ -67,6 +67,11 @@ hr {
 
 header {
   text-align: center;
+}
+
+.title{
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .panel {
@@ -251,19 +256,23 @@ label.disabled {
 
 .field{
   display: flex;
-  flex: 1 1 10%;
+  flex-grow: 1;
+  flex-basis: 100%;
   align-items: center;
   justify-content: space-evenly;
   align-items: center;
+  margin-top: 1rem;
 }
-
-.field > *:first-child { 
+.field:first-child {
+  margin-top: 0;
+}
+.field > *:first-child {
   flex-grow: 1;
   text-align: center;
   align-content: center;
  }
 
-.field > *:nth-child(2) { 
+.field > *:nth-child(2) {
   flex-grow: 0.2;
   margin-right: 2rem;
 }
@@ -277,16 +286,20 @@ label.disabled {
   border: 3px dashed var(--grey-font);
 }
 
-@media(max-width: 640px) {
+@media(min-width: 480px) {
+  .field {
+    flex-basis: 10%;
+    margin-top: 0;
+  }
   .field:last-child {
     flex-basis: 100%;
     margin-top: 1rem;
   }
 }
-@media(max-width: 480px) {
-  .field:first-child {
-    flex-basis: 100%;
-    margin-bottom: 1rem;
+@media(min-width: 640px) {
+  .field:last-child {
+    flex-basis: 10%;
+    margin-top: 0;
   }
 }
 /* PANEL ELEMENTS LOGIC 
@@ -310,6 +323,7 @@ When inverse is applied:
 }
 
 /* GENERAL */
+.hidden-outline,
 .hidden {
   display: none;
 }
