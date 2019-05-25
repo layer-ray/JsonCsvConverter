@@ -204,12 +204,17 @@ function removePanelSplit(){
 function displayNotification(title, message, type="error", tmp=false){
     notificationTitle.innerText = title;
     notificationBody.innerText = message;
+    notification.classList.remove('exit');
+    notification.classList.remove('fade-out');
     notification.classList.remove('error');
     notification.classList.remove('success');
     notification.classList.add(type);
     if(tmp) {
-        notification.classList.remove('exit');
-        notification.classList.add('tmp');
+        notification.classList.add('fade-in');
+        setTimeout(() => {
+            notification.classList.remove('fade-in');
+            notification.classList.add('fade-out');
+        }, 1000);
     } else {
         notification.classList.remove('tmp');
         notification.classList.remove('exit');
