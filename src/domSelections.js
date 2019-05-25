@@ -34,6 +34,8 @@ export const editorLowerWrapperArea = document.querySelector('#lower-area-wrappe
 export const closeEditorLowerArea = document.querySelector('#close-lower-area');
 
 export const metadataInput = document.querySelector('#metadata');
+export const metadataWrapper = document.querySelector('#metadata-wrapper');
+export const metadataLabel = document.querySelector('#metadata-label');
 
 export const convertBtn = document.querySelector('#convert-btn');
 
@@ -45,3 +47,6 @@ export const notificationBody = document.querySelector('#notification-body');
 
 export const spacerWrapper = document.querySelector('#spacer-wrapper');
 export const pathWrapper = document.querySelector('#path-wrapper');
+
+export const pathInput = document.querySelector('#path');
+export const submitBtn = document.querySelector('#submit-btn');

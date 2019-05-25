@@ -48,7 +48,7 @@
                 class="btn load-btn"
                 id="load-btn"
             >
-                <span>LOAD CSV</span>
+                <span>SELECT CSV FILE</span>
                 <input 
                     size="1"
                     type="file" 
@@ -56,19 +56,6 @@
                     id="loader" 
                     class="load-input"
                 >
-            </div>
-            <div class="spacer-wrapper" id="spacer-wrapper">
-                <hr/>
-                <span> OR </span>
-            </div>
-            <div class="path-wrapper" id="path-wrapper">
-                <input 
-                    type="text"
-                    placeholder="write absolute path here"
-                    name="path" 
-                    id="path"
-                />
-                <button class="btn submit-btn">load file</button>
             </div>
             <button 
                 class="btn save-btn hidden"
@@ -114,14 +101,26 @@
                     ></textarea>
                 </div> 
             </div>
-            <input 
-                type="text" 
-                name="metadata" 
-                id="metadata" 
-                class="metadata"
-                size="1"
-                disabled="true"
+            <div 
+                class="metadata-wrapper"
+                id="metadata-wrapper"
             >
+                <label
+                    id="metadata-label"
+                    for="metadata"
+                    class="disabled"
+                >
+                    Metadata: 
+                </label>
+                <input 
+                    type="text" 
+                    name="metadata" 
+                    id="metadata" 
+                    class="metadata"
+                    size="1"
+                    disabled="true"
+                >
+            </div>            
             <button 
             class="btn beauty-btn"
             id="beautify"

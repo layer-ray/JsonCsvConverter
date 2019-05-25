@@ -5,6 +5,7 @@ import {
 
 import { checkEmbeddedLineTerminators } from './csvToJson';
 
+// double cbs to match wfs signature
 export function loadFile(file, ext = "csv", cb){
     const reader = new FileReader();
     let supportedTypes = ['text/plain','text/csv', 'text/tsv','application/json'];
@@ -39,7 +40,7 @@ export function saveFile(data, filename, fileFormat = 'csv'){
             : "application/json;charset=utf-8"
 
     let blob = new Blob([data], { type });
-    saveAs(blob, `${filename}.${fileFormat}`);
+    saveAs(blob, `${filename}`);
 };
 
 export function prettyPrint(input, fileFormat = "csv"){

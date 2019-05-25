@@ -2,7 +2,7 @@ import convertJsonToCsv from './jsonToCsv';
 import convertCsvToJson from './csvToJson';
 
 import './index.css';
-import {prettyPrint, loadFile, saveFile} from './manageFiles';
+import {prettyPrint, loadFile, fetchFile, saveFile} from './manageFiles';
 
 import {
     pageContainer, togglerBtn, displayOptions, 
@@ -13,8 +13,8 @@ import {
     editorLowerWrapperArea, closeEditorLowerArea, 
     metadataInput, convertBtn, notification,
     closeNotificationBtn, notificationBody,
-    notificationTitle, spacerWrapper,
-    pathWrapper
+    notificationTitle, metadataWrapper,
+    metadataLabel
 } from './domSelections';
 
 //initial file format
@@ -35,7 +35,7 @@ function reverse(){
     loaderInput.value = null;
     convertBtn.disabled = true;
     saveBtn.disabled = true;
-    loadTitleSpan.innerText = `LOAD ${iff.toUpperCase()}`;
+    loadTitleSpan.innerText = `SELECT ${iff.toUpperCase()} FILE`;
     saveBtn.innerText = `SAVE ${eff.toUpperCase()}`
     toggler.innerHTML = `${iff} to ${eff} <span>&rlarr;</span>`
 };
@@ -61,6 +61,8 @@ function convert(){
         if(conversionState) {
             editorArea.value = "";
             metadataInput.value = "";
+            metadataInput.disabled = true;
+            metadataLabel.innerText = 'Metadata:'
             editorLowerArea.value = "";
             convertBtn.disabled = true;
             removePanelSplit();
@@ -69,7 +71,9 @@ function convert(){
         } else {
             convertFile();
             displayNotification(`Conversion successful!`, "", 'success', true);
-            metadataInput.value = `Save file as: ${fileMetadata.name}.${eff}`
+            metadataInput.value = `${fileMetadata.name}.${eff}`;
+            metadataInput.disabled = false;
+            metadataLabel.innerText = 'Save file as:'
             conversionState = 1;
         }
     } catch(err){
@@ -83,7 +87,6 @@ function convert(){
     panel.classList.toggle('inverse');
     panel.classList.toggle('stretch');
     closeEditorBtn.classList.toggle('hidden');
-    metadataInput.value = "";
     loaderInput.value = null;
     
     displayOptions.classList.toggle('hidden');
@@ -105,22 +108,23 @@ function convertFile(){
 
 function load(e){
     loadFile(e.target.files[0], iff, (err, content) => {
-            if(err){
-                displayNotification(`Error`, err, 'error');
-                throw Error();
-            }
-            editorArea.value = content.data;
-            fileMetadata = content.metadata;
-            metadataInput.value = `
-            File name: ${content.metadata.name}  - File size: ${content.metadata.size} bytes`
-            
-            let event = new InputEvent('input')
-            editorArea.dispatchEvent(event);
-        });    
-}
+        if(err) {
+            displayNotification(`Error`, err.message, 'error');
+            throw Error();
+        }
+
+        editorArea.value = content.data;
+        fileMetadata = content.metadata;
+        metadataInput.value = `
+        File name: ${content.metadata.name}  - File size: ${content.metadata.size} bytes`
+        
+        let event = new InputEvent('input')
+        editorArea.dispatchEvent(event);
+    });  
+};
 
 function save(){
-    saveFile(result, fileMetadata.name, eff);
+    saveFile(result, metadataInput.value, eff);
 }
 
 // get pasted text to display its size
@@ -144,11 +148,9 @@ function isAreaEmpty(e){
 function swapResultOriginal(){
     panel.classList.toggle('inverse');
     loadBtn.classList.toggle('hidden');
-    spacerWrapper.classList.toggle('hidden');
-    pathWrapper.classList.toggle('hidden');
     beautifyBtn.classList.toggle('hidden');
     closeEditorBtn.classList.toggle('hidden');
-    metadataInput.classList.toggle('hidden');
+    metadataWrapper.classList.toggle('hidden');
 
     if(conversionState) {
         editorArea.value = original;
@@ -195,6 +197,8 @@ function removePanelSplit(){
 function displayNotification(title, message, type="error", tmp=false){
     notificationTitle.innerText = title;
     notificationBody.innerText = message;
+    notification.classList.remove('error');
+    notification.classList.remove('success');
     notification.classList.add(type);
     if(tmp) {
         notification.classList.remove('exit');

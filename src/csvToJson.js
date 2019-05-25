@@ -24,7 +24,7 @@ export default function main(data, delimiter=',', firstlineHeader=false)
             // remove unnecessary double quotes 
             let currentKey = keys[i].replace(/"/g, "");
             let currentValue;
-            if(currentValue === ""){
+            if(fields[i] === ""){
                 currentValue = null
             } else {
                 currentValue = fields[i].replace(/"/g, "").trim();
@@ -102,7 +102,7 @@ export function checkEmbeddedLineTerminators(rows) {
             // the row does not include a complete record
             if(numQuotes.length %2 === 1){
                 crippledRows.push(i);
-                console.log('inline terminator detected:', i);
+                //console.log('inline terminator detected:', i);
             };
         };
 
