@@ -1,4 +1,4 @@
 {
-  "root": "public_html",
+  "root": "dist",
   "clean_urls": true
 }
