@@ -28,7 +28,7 @@ export default function main(data, delimiter=',', firstlineHeader=false)
         };
         for(let i=0; i<fields.length; i++){
             // remove unnecessary double quotes 
-            let currentKey = keys[i].replace(/"/g, "");
+            let currentKey = keys[i].replace(/"/g, "").trim();
             let currentValue;
             if(fields[i] === ""){
                 currentValue = null
