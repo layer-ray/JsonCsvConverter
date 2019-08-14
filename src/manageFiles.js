@@ -1,8 +1,3 @@
-import {
-    loaderInput, editorArea,
-    metadataInput
-} from './domSelections';
-
 import { checkEmbeddedLineTerminators } from './csvToJson';
 
 // double cbs to match wfs signature

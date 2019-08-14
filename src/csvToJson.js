@@ -37,7 +37,6 @@ export default function main(data, delimiter=',', firstlineHeader=false)
             }
             tmp[currentKey] = currentValue;
         };
-        console.log('tmp', tmp)
         resultJson.push(tmp);
     };
 
