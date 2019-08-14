@@ -74,6 +74,7 @@ function convert(){
             metadataInput.disabled = true;
             metadataLabel.innerText = 'Metadata:'
             editorLowerArea.value = "";
+            convertBtn.innerText = "CONVERT";
             convertBtn.disabled = true;
             removePanelSplit();
 
@@ -84,6 +85,7 @@ function convert(){
             metadataInput.value = `${fileMetadata.name}.${eff}`;
             metadataInput.disabled = false;
             metadataLabel.innerText = 'Save file as:'
+            convertBtn.innerText = "RESET";
             conversionState = 1;
         }
     } catch(err){
