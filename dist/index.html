@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSON|CSV converter</title>
+<link href="main.css" rel="stylesheet"></head>
+<body>
+    <h2 class="title"> JSON | CSV CONVERTER </h2>
+    <div class="main-container" id="main-container">
+        <header>
+            <h4 class="hidden-outline">toggle conversion option</h4>
+            <button id="toggler" class="btn toggler-btn">
+                csv to json 
+                <span aria-hidden="true" role="img">
+                    &rlarr;
+                </span>
+            </button>
+            <nav class="header-options hidden" id="header-options">
+                <h4 class="hidden-outline">result display options</h4>
+                <button 
+                    class="btn btn-toggle-areas"
+                    id="swap-areas"
+                >
+                    <span aria-hidden="true" role="img">
+                        &larrhk;
+                    </span>  
+                    see original
+                </button>
+                <div class="splitters">
+                     <button 
+                        class="btn btn-split-h"
+                        id="split-h"
+                    >
+                        <span aria-hidden="true" role="img" >
+                            &#8614;
+                        </span> 
+                        split h
+                    </button>
+                    <button 
+                        class="btn btn-split-v"
+                        id="split-v"
+                    >
+                        <span aria-hidden="true" role="img" >
+                            &mapstodown;
+                        </span> 
+                        split v
+                    </button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- PANEL -->
+
+        <main class="panel" id="panel">
+            <h4 class="hidden-outline">code panel (load/save included)</h4>
+            <!-- 'button' is not used because semantics 
+                is given by the underlying 'input:file' element -->
+            <div 
+                class="btn load-btn"
+                id="load-btn"
+                role="button"
+            >
+                <span>SELECT CSV FILE</span>
+                <input 
+                    size="1"
+                    type="file" 
+                    name="loader"
+                    id="loader" 
+                    class="load-input"
+                >
+            </div>
+            <button 
+                class="btn save-btn hidden"
+                id="save-btn"
+                disabled="true"
+            >
+                SAVE JSON
+            </button>
+            <div class="split-area" id="split-area">
+                <div 
+                    class="area-wrapper" 
+                    id="upper-area-wrapper"
+                >
+                    <button 
+                        class="close-area hidden"
+                        id="close-upper-area"
+                    >
+                        close result screen and go back to home 
+                        <span font-size="7">&times;</span>
+                    </button>
+                    <textarea 
+                        name="upper-area" 
+                        id="upper-area"
+                        cols="1"
+                        class="code-area"
+                    ></textarea>
+                </div>
+                <div
+                    class="area-wrapper hidden" 
+                    id="lower-area-wrapper"
+                >
+                    <button 
+                        class="close-area"
+                        id="close-lower-area"
+                    >
+                        close original file <span>&times;</span>
+                    </button>
+                    <textarea 
+                        name="lower-area" 
+                        id="lower-area"
+                        cols="1"
+                        class="code-area"
+                    ></textarea>
+                </div> 
+            </div>
+            <div 
+                class="metadata-wrapper"
+                id="metadata-wrapper"
+            >
+                <label
+                    id="metadata-label"
+                    for="metadata"
+                    class="disabled"
+                >
+                    Metadata: 
+                </label>
+                <input 
+                    type="text" 
+                    name="metadata" 
+                    id="metadata" 
+                    class="metadata"
+                    size="1"
+                    disabled="true"
+                >
+            </div>            
+            <button 
+            class="btn beauty-btn"
+            id="beautify"
+            disabled="true"
+            >
+                beautify
+            </button>
+        </main>
+        <footer class="commands" id="commands">
+            <h4 class="hidden-outline">commands and options</h4>
+            <div class="field">
+                <label for="delimiter">csv delimiter</label>
+                <input 
+                    type="text" 
+                    name="delimiter" 
+                    id="delimiter"
+                    maxlength="1"
+                    value=","
+                >
+            </div>
+            <div class="field">
+                <label for="first-line">
+                    use first line as header / <br/>
+                    keys as first line
+                </label>
+                <input 
+                    type="checkbox" 
+                    name="first-line" 
+                    id="first-line"
+                    value="first-line"
+                >
+            </div>
+            <div class="field">
+                    <button 
+                    class="btn convert-btn" 
+                    id="convert-btn"
+                    disabled="true"
+                >
+                    CONVERT!
+                </button>
+            </div>
+        </footer>
+        <div 
+            class="notification" 
+            id="notification" 
+            role="notification"
+        >
+            <h4 class="hidden-outline">notification</h4>
+                <button class="btn notification-btn">&times;</button>
+                <h4 id="notification-title"></h4>
+                <div id="notification-body"></div>
+        </div>
+    </div>
+<script type="text/javascript" src="main.js"></script></body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+</html>
